@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlockEnergy - Decentralised Energy and Commodity Trading</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+        header, footer { background-color: #1E90FF; color: white; padding: 20px; text-align: center; }
+        nav { background-color: #333; overflow: hidden; }
+        nav a { float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none; }
+        nav a:hover { background-color: #ddd; color: black; }
+        section { margin: 20px; padding: 20px; border-radius: 10px; background-color: #f9f9f9; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+        
+        /* Logo styling */
+        .logo img {
+            display: block;
+            font-size: 0;
+            background: #1E90FF;
+            width: 150px;
+        }
+
+        /* Header layout */
+        header {
+            position: relative;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo { flex: 0 0 150px; }
+        
+        /* Language switcher */
+        .language-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .language-switcher select {
+            padding: 8px 12px;
+            border-radius: 5px;
+            background: white;
+            color: #1E90FF;
+            border: 1px solid #1E90FF;
+        }
+
+        /* CTA Button */
+        .cta-button {
+            background-color: #1E90FF;
+            color: white !important;
+            padding: 12px 24px;
+            border: 2px solid white;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .cta-button:hover {
+            background-color: #0066CC;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Other styles */
+        h1, h2 { color: #333; }
+        .content { margin-bottom: 20px; }
+        .web3-section { background-color: #1E90FF; color: white; padding: 20px; text-align: center; }
+        .timeline, .tokenomics { display: flex; justify-content: space-between; margin: 20px 0; }
+        .timeline-item, .tokenomics-item { flex: 1; text-align: center; padding: 10px; border: 1px solid #ddd; border-radius: 5px; margin: 0 5px; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="images/blockenergy-logo.jpg" 
+                 alt=""
+                 loading="lazy">
+        </div>
+        <div class="header-content">
+            <h1 data-translate="companyTitle">BlockEnergy</h1>
+            <p data-translate="companyTagline">Decentralised Energy and Commodity Trading Platform</p>
+        </div>
+        <div class="language-switcher">
+            <select id="languageSelect">
+                <option value="en">English (UK)</option>
+                <option value="zh">中文</option>
+                <option value="fr">Français</option>
+                <option value="de">Deutsch</option>
+                <option value="ja">日本語</option>
+                <option value="ko">한국어</option>
+            </select>
+        </div>
+        <button class="cta-button" onclick="connectWallet()" data-translate="connectWallet">Connect Wallet</button>
+    </header>
+
+    <nav>
+        <a href="#about" data-translate="navAbout">About</a>
+        <a href="#features" data-translate="navFeatures">Features</a>
+        <a href="#technology" data-translate="navTechnology">Technology</a>
+        <a href="#roadmap" data-translate="navRoadmap">Roadmap</a>
+        <a href="#tokenomics" data-translate="navTokenomics">Tokenomics</a>
+        <a href="#contact" data-translate="navContact">Contact</a>
+    </nav>
+
+    <!-- About Section -->
+    <section id="about">
+        <h2 data-translate="aboutHeading">About BlockEnergy</h2>
+        <p data-translate="aboutText">BlockEnergy (BE) is a decentralised platform leveraging <strong>blockchain</strong>, <strong>AI</strong>, and <strong>DeFi</strong> to revolutionize global energy and commodity trading. BE enables <strong>Transactive Energy</strong>, <strong>petroleum product trading</strong>, and <strong>carbon credit trading</strong> with transparency and efficiency.</p>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features">
+        <h2 data-translate="featuresHeading">Features</h2>
+        <div class="content">
+            <p data-translate="feature1"><strong>Decentralised Trading:</strong> Powered by Fetch.ai’s Autonomous Economic Agents (AEAs).</p>
+            <p data-translate="feature2"><strong>AI-Driven Insights:</strong> Enhanced by DeepSeek’s analytics and automation.</p>
+            <p data-translate="feature3"><strong>Multi-Currency StableCoins:</strong> CBDC-pegged StableCoins for cross-border transactions.</p>
+            <p data-translate="feature4"><strong>Regulatory Compliance:</strong> Automated compliance with EU ETS, Chinese carbon credit frameworks, and more.</p>
+            <p data-translate="feature5"><strong>Sustainability:</strong> Supporting green energy projects and EV infrastructure.</p>
+        </div>
+    </section>
+
+    <!-- Technology Section -->
+    <section id="technology">
+        <h2 data-translate="technologyHeading">Technology</h2>
+        <div class="content">
+            <p data-translate="tech1"><strong>Fetch.ai:</strong> AEAs for decentralized trading and IoT integration.</p>
+            <p data-translate="tech2"><strong>DeepSeek:</strong> AI for market analysis, risk assessment, and document automation.</p>
+            <p data-translate="tech3"><strong>Blockchain:</strong> Built on Cosmos SDK for scalability and interoperability.</p>
+            <p data-translate="tech4"><strong>Web3:</strong> Decentralized hosting on IPFS and blockchain-based authentication.</p>
+        </div>
+    </section>
+
+    <!-- Roadmap Section -->
+    <section id="roadmap">
+        <h2 data-translate="roadmapHeading">Roadmap</h2>
+        <div class="timeline">
+            <div class="timeline-item" data-translate="roadmapQ1">
+                <h3>Q1 2025</h3>
+                <p>Platform development (blockchain, AEAs, AI modules).</p>
+            </div>
+            <div class="timeline-item" data-translate="roadmapQ2">
+                <h3>Q2 2025</h3>
+                <p>Pilot projects (EV charging in GBA, transactive energy grid in EU).</p>
+            </div>
+            <div class="timeline-item" data-translate="roadmapQ3">
+                <h3>Q3 2025</h3>
+                <p>Full deployment (carbon credit trading, petroleum product trading).</p>
+            </div>
+            <div class="timeline-item" data-translate="roadmapQ4">
+                <h3>Q4 2025</h3>
+                <p>Global expansion (Asia, EU, North America, Middle East).</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tokenomics Section -->
+    <section id="tokenomics">
+        <h2 data-translate="tokenomicsHeading">Tokenomics</h2>
+        <div class="tokenomics">
+            <div class="tokenomics-item" data-translate="token1">
+                <h3>Energy Tokens</h3>
+                <p>For P2P energy trading.</p>
+            </div>
+            <div class="tokenomics-item" data-translate="token2">
+                <h3>Carbon Credits</h3>
+                <p>Tokenised EUAs and Chinese carbon credits.</p>
+            </div>
+            <div class="tokenomics-item" data-translate="token3">
+                <h3>StableCoins</h3>
+                <p>Multi-currency/CBDC-pegged for cross-border transactions.</p>
+            </div>
+            <div class="tokenomics-item" data-translate="token4">
+                <h3>Governance Tokens</h3>
+                <p>For platform governance.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Web3 Integration Section -->
+    <div class="web3-section">
+        <h2 data-translate="web3Heading">Web3 Integration</h2>
+        <p data-translate="web3Text">Connect your wallet to interact with BlockEnergy’s decentralised platform.</p>
+        <button onclick="connectWallet()" data-translate="connectWallet">Connect Wallet</button>
+    </div>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2 data-translate="contactHeading">Contact Us</h2>
+        <p>Email: <a href="mailto:info@blockenergy.net">info@blockenergy.net</a></p>
+        <p>Telegram: <a href="https://t.me/blockenergy">t.me/blockenergy</a></p>
+        <p>Twitter: <a href="https://twitter.com/blockenergy">@blockenergy</a></p>
+        <p>GitHub: <a href="https://github.com/blockenergy">github.com/blockenergy</a></p>
+    </section>
+
+    <footer>
+        <p data-translate="footerText">BlockEnergy © is a registered business name of CRIL, Ireland, and SKL, HKSAR.</p>
+    </footer>
+
+    <!-- Web3 Script -->
+    <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
+    <script>
+        const connectWallet = async () => {
+            if (window.ethereum) {
+                try {
+                    await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    const web3 = new Web3(window.ethereum);
+                    const accounts = await web3.eth.getAccounts();
+                    alert(`Connected: ${accounts[0]}`);
+                } catch (error) {
+                    console.error(error);
+                }
+            } else {
+                alert("Please install MetaMask!");
+            }
+        };
+    </script>
+
+    <!-- Language Switcher Script -->
+    <script src="scripts/language-switcher.js"></script>
+</body>
+</html>

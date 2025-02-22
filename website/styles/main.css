@@ -1,0 +1,5 @@
+.logo img {
+    background: #1E90FF;
+    min-height: 150px;
+    object-fit: contain;
+}

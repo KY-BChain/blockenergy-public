@@ -1,0 +1,61 @@
+# mkdocs.yml (root directory)
+site_name: BlockEnergy Docs
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.indexes
+  palette:
+    - scheme: default
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to dark mode
+      primary: deep purple
+    - scheme: slate
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
+
+plugins:
+  - search
+  - mermaid2                  # Mermaid diagrams
+  - static-i18n               # Multilingual support
+  - git-revision-date-localized  # For CID tracking
+
+markdown_extensions:
+  - pymdownx.superfences
+  - pymdownx.highlight
+  - attr_list
+  - md_in_html
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+
+extra:
+  disclaimer: |
+    > [!WARNING]
+    > Document CID: {{ git.commit }} | [Verify on IPFS](https://ipfs.io/ipfs/$FLEEK_DEPLOYMENT_CID)
+
+extra_css:
+  - https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.css
+
+nav:
+  - Home: index.md
+  - Trading:
+    - Energy Trading: guides/energy-trading.md
+  - API Reference:
+    - OpenAPI Spec: api/openapi.yaml
+  - Legal:
+    - SPA Template: legal/spa-template.md
+
+# i18n Configuration
+extra_i18n:
+  default_language: en
+  languages:
+    en: English
+    zh: 中文
+    fr: Français
+    de: Deutsch
+    ja: 日本語
+    ko: 한국어
+    ru: Русский

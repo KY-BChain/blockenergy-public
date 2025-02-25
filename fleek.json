@@ -1,0 +1,9 @@
+{
+    "build": {
+      "command": "mkdocs build",
+      "publishDir": "site",
+      "environment": {
+        "PYTHON_VERSION": "3.10"
+      }
+    }
+  }

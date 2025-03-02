@@ -1,4 +1,4 @@
-# BlockEnergy Core Platform
+# BlockEnergy Public Platform
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![ERC-3643](https://img.shields.io/badge/Standard-ERC--3643-green)](https://erc3643.org)
@@ -28,6 +28,7 @@ flowchart TD
         EnergyGrid -->|Pricing| AI["Fetch.ai AEA"]
         Carbon -->|Verification| Oracle["Chainlink/DeepSeek"]
     end
+```
 
 ## 🏦 $BE StableCoin Architecture
 

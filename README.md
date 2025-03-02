@@ -25,7 +25,7 @@ flowchart TD
         Stablecoin -->|Trading| Carbon["Carbon Credit Markets"]
         
         Commodities -->|Tokenization| RWA["RWAs (EN590, Jet Fuel)"]
-        EnergyGrid -->|Pricing| AI["Fetch.ai AEA"]
+        EnergyGrid -->|Pricing| AI["Fetch.ai AEA+DeepSeek API"]
         Carbon -->|Verification| Oracle["Chainlink/DeepSeek"]
     end
 ```

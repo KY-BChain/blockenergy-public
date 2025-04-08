@@ -1,34 +1,34 @@
 document.addEventListener('DOMContentLoaded', () => {
     const loadLanguage = async (lang = 'en') => {
         try {
-            const response = await fetch(`lang/${lang}.json?t=${Date.now()}`);
-            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            const response = await fetch(`lang/${lang}.json`);
             const translations = await response.json();
             
             // Update all translatable elements
             document.querySelectorAll('[data-translate]').forEach(element => {
                 const key = element.dataset.translate;
-                if(translations[key]) {
-                    if(element.tagName === 'INPUT') {
-                        element.placeholder = translations[key];
-                    } else {
-                        element.innerHTML = translations[key]; // Preserve HTML
-                    }
-                }
+                element.innerHTML = translations[key] || element.innerHTML;
             });
-            
-            // Update selected language
-            document.getElementById('languageSelect').value = lang;
+
+            // Update placeholders
+            document.querySelectorAll('[data-translate-placeholder]').forEach(element => {
+                const key = element.dataset.translatePlaceholder;
+                element.placeholder = translations[key] || element.placeholder;
+            });
+
+            // Update RTL direction
+            document.documentElement.lang = lang;
+            document.body.dir = lang === 'ar' ? 'rtl' : 'ltr';
             
         } catch (error) {
             console.error('Language load error:', error);
         }
     };
 
-    // Initialize with default language
+    // Initialize
     loadLanguage();
 
-    // Event listener for language selector
+    // Event listener
     document.getElementById('languageSelect').addEventListener('change', (e) => {
         loadLanguage(e.target.value);
     });

@@ -1,4 +1,7 @@
 {
+    "authUserId": "User ID",
+    "authPassword": "Password",
+    "authAccess": "Access DApp",
     "companyTitle": "BlockEnergy",
     "companyTagline": "Decentralised Energy and Commodity Trading Platform",
     "connectWallet": "Connect Wallet",

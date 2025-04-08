@@ -1,8 +1,10 @@
+<!-- DACFarmApp/public/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/main.css"> <!-- External CSS -->
     <title>BlockEnergy - Decentralised Energy and Commodity Trading</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
@@ -73,30 +75,121 @@
         .timeline, .tokenomics { display: flex; justify-content: space-between; margin: 20px 0; }
         .timeline-item, .tokenomics-item { flex: 1; text-align: center; padding: 10px; border: 1px solid #ddd; border-radius: 5px; margin: 0 5px; }
     </style>
+     <style>
+        /* Add auth form styling */
+        .auth-form {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        .auth-form input {
+            padding: 8px 12px;
+            border: 1px solid #1E90FF;
+            border-radius: 4px;
+        }
+    </style>
 </head>
 <body>
+
     <header>
         <div class="logo">
-            <img src="images/blockenergy-logo.jpg" 
-                 alt=""
-                 loading="lazy">
+            <img src="images/blockenergy-logo.jpg" alt="" loading="lazy">
         </div>
+        
         <div class="header-content">
             <h1 data-translate="companyTitle">BlockEnergy</h1>
             <p data-translate="companyTagline">Decentralised Energy and Commodity Trading Platform</p>
         </div>
-        <div class="language-switcher">
-            <select id="languageSelect">
-                <option value="en">English (UK)</option>
-                <option value="zh">中文</option>
-                <option value="fr">Français</option>
-                <option value="de">Deutsch</option>
-                <option value="ja">日本語</option>
-                <option value="ko">한국어</option>
-            </select>
+    
+        <!-- RIGHT-ALIGNED CONTROLS CONTAINER -->
+        <div class="header-right">
+            <!-- Language Switcher -->
+            <div class="language-switcher">
+                <select id="languageSelect">
+                    <option value="en">English (UK)</option>
+                    <option value="zh">中文</option>
+                    <option value="fr">Français</option>
+                    <option value="de">Deutsch</option>
+                    <option value="ja">日本語</option>
+                    <option value="ko">한국어</option>
+                    <option value="ru">Русский</option>
+                    <option value="ar">العربية</option>
+                </select>
+            </div>
+    
+            <!-- Auth Section (Added data-translate attributes) -->
+            <div class="g-auth-container">
+                <button class="cta-button" onclick="connectWallet()" data-translate="connectWallet">Connect Wallet</button>
+                <input type="text" id="authUid" placeholder="User ID" data-translate-placeholder="authUserId">
+                <input type="password" id="authPass" placeholder="Password" data-translate-placeholder="authPassword">
+                <button onclick="verifyAccess()" data-translate="authAccess">Access DApp</button>
+            </div>
         </div>
-        <button class="cta-button" onclick="connectWallet()" data-translate="connectWallet">Connect Wallet</button>
     </header>
+  
+<!-- - import { MetaMaskSDK } from '@metamask/sdk' -->
+<!-- + import { GanacheAuth } from './auth.js'-->
+    <script type="module">
+        import { authenticate } from '../modules/core/frontend/scripts/auth.js';
+    
+        async function verifyAccess() {
+            const userId = document.getElementById('authUid').value;
+            const password = document.getElementById('authPass').value;
+      
+        try {
+            const user = await authenticate(userId, password);
+            sessionStorage.setItem('dacfarm-user', JSON.stringify(user));
+            window.location.href = 'modules/core/frontend/DACFarmCAPEXCalculator.html';
+      } catch (error) {
+        alert('Authentication failed: ' + error.message);
+      }
+    }
+    </script>
+    
+<!-- Web3 Script -->
+<script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
+<script>
+    const connectWallet = async () => {
+        if (window.ethereum) {
+            try {
+                await window.ethereum.request({ method: 'eth_requestAccounts' });
+                const web3 = new Web3(window.ethereum);
+                const accounts = await web3.eth.getAccounts();
+                alert(`Connected: ${accounts[0]}`);
+            } catch (error) {
+                console.error(error);
+            }
+        } else {
+            alert("Please install MetaMask!");
+        }
+    };
+</script>
+
+<!-- Language Switcher Script -->
+<script src="scripts/language-switcher.js"></script>
+
+<!-- User log in -->
+<script>
+    // Auth verification
+    async function verifyAccess() {
+        const uid = document.getElementById('authUid').value;
+        const password = document.getElementById('authPass').value;
+        
+    // Simple credential check
+        const validCredentials = {
+            "user1": "pass1",
+            "user2": "pass2"
+        };
+
+        if(validCredentials[uid] === password) {
+            window.location.href = '/dapp.html';
+        } else {
+            alert("Invalid credentials");
+        }
+    }
+</script>
 
     <nav>
         <a href="#about" data-translate="navAbout">About</a>
@@ -110,7 +203,7 @@
     <!-- About Section -->
     <section id="about">
         <h2 data-translate="aboutHeading">About BlockEnergy</h2>
-        <p data-translate="aboutText">BlockEnergy (BE) is a decentralised platform leveraging <strong>blockchain</strong>, <strong>AI</strong>, and <strong>DeFi</strong> to revolutionize global energy and commodity trading. BE enables <strong>Transactive Energy</strong>, <strong>petroleum product trading</strong>, and <strong>carbon credit trading</strong> with transparency and efficiency for today's Real World Assets "RWA".</p>
+        <p data-translate="aboutText">BlockEnergy (BE) is a decentralised platform leveraging <strong>blockchain</strong>, <strong>AI</strong>, and <strong>DeFi</strong> to revolutionize global energy and commodity trading. BE enables <strong>Transactive Energy</strong>, <strong>petroleum product trading</strong>, and <strong>carbon credit trading</strong> with transparency and efficiency for today's Real World Assets <strong>"RWA"</strong></p>        
     </section>
 
     <!-- Features Section -->
@@ -202,26 +295,5 @@
         <p data-translate="footerText">BlockEnergy © is a registered business name of CRIL, Ireland, and SKL, HKSAR.</p>
     </footer>
 
-    <!-- Web3 Script -->
-    <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
-    <script>
-        const connectWallet = async () => {
-            if (window.ethereum) {
-                try {
-                    await window.ethereum.request({ method: 'eth_requestAccounts' });
-                    const web3 = new Web3(window.ethereum);
-                    const accounts = await web3.eth.getAccounts();
-                    alert(`Connected: ${accounts[0]}`);
-                } catch (error) {
-                    console.error(error);
-                }
-            } else {
-                alert("Please install MetaMask!");
-            }
-        };
-    </script>
-
-    <!-- Language Switcher Script -->
-    <script src="scripts/language-switcher.js"></script>
 </body>
 </html>

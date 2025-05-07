@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DeFiFuelDeal – Document Verification</title>
+  <link rel="stylesheet" href="styles/main.css" />
+  <script src="https://cdn.jsdelivr.net/npm/ethers/dist/ethers.min.js"></script>
+  <script src="https://unpkg.com/ipfs-http-client/dist/index.min.js"></script>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="logo"><img src="images/blockenergy-logo.jpg" alt="BlockEnergy Logo" /></div>
+    <div class="header-content">
+      <h1>DeFiFuelDeal</h1>
+      <p>Step 2: Document Verification</p>
+    </div>
+  </header>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="index.html">Back to Main Site</a>
+    <a href="auth.html">Authentication</a>
+    <a href="verify.html" class="active">Verification</a>
+    <a href="payment.html">Payment</a>
+    <a href="dapp.html">Dashboard</a>
+  </nav>
+
+  <!-- Main Content -->
+  <main>
+    <section class="content">
+      <h2>Commercial Invoice</h2>
+      <button class="viewDoc" data-doc="ci">View</button>
+      <button class="approveDoc" data-doc="ci">Approve</button>
+      <button class="rejectDoc" data-doc="ci">Reject</button>
+      <p id="ciStatus" class="status"></p>
+    </section>
+
+    <section class="content">
+      <h2>Dip Test Authorization</h2>
+      <button class="viewDoc" data-doc="dta">View</button>
+      <button class="approveDoc" data-doc="dta">Approve</button>
+      <button class="rejectDoc" data-doc="dta">Reject</button>
+      <p id="dtaStatus" class="status"></p>
+    </section>
+
+    <section class="content">
+      <h2>SGS Report</h2>
+      <button class="viewDoc" data-doc="sgs">View</button>
+      <button class="approveDoc" data-doc="sgs">Approve</button>
+      <button class="rejectDoc" data-doc="sgs">Reject</button>
+      <p id="sgsStatus" class="status"></p>
+    </section>
+
+    <section class="content">
+      <h2>Certificate of Origin</h2>
+      <button class="viewDoc" data-doc="coo">View</button>
+      <button class="approveDoc" data-doc="coo">Approve</button>
+      <button class="rejectDoc" data-doc="coo">Reject</button>
+      <p id="cooStatus" class="status"></p>
+    </section>
+
+    <section class="content">
+      <h2>Storage Receipt</h2>
+      <button class="viewDoc" data-doc="sr">View</button>
+      <button class="approveDoc" data-doc="sr">Approve</button>
+      <button class="rejectDoc" data-doc="sr">Reject</button>
+      <p id="srStatus" class="status"></p>
+    </section>
+
+    <section class="content">
+      <h2>Injection Report</h2>
+      <button class="viewDoc" data-doc="ir">View</button>
+      <button class="approveDoc" data-doc="ir">Approve</button>
+      <button class="rejectDoc" data-doc="ir">Reject</button>
+      <p id="irStatus" class="status"></p>
+    </section>
+
+    <!-- Continue -->
+    <section class="content">
+      <button id="toPayment" class="cta-button">Continue to Payment & Commissions</button>
+    </section>
+  </main>
+
+  <!-- Placeholder Scripts -->
+  <script>
+    // TODO: load each document from IPFS/blockchain, handle approve/reject, update status badges
+    document.getElementById('toPayment').onclick = () => location.href = 'payment.html';
+  </script>
+</body>
+</html>

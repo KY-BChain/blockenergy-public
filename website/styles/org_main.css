@@ -1,10 +1,6 @@
 /* blockenergy-public/website/styles/main.css */
 
-/* === Original Styles Preserved Exactly === */
-:root { 
-  font-size: 16px; 
-  }
-
+/* Base Styles */
 body { 
     font-family: Arial, sans-serif; 
     margin: 0; 
@@ -19,12 +15,14 @@ body {
     text-align: center; 
   }
   
+  /* Logo Styling */
   .logo img {
     width: 150px;
     height: auto;
     margin-top: 10px;
   }
   
+  /* Header Layout */
   header {
     display: flex;
     justify-content: space-between;
@@ -34,6 +32,7 @@ body {
     gap: 20px;
   }
   
+  /* Right-Aligned Controls Container */
   .header-right {
     display: flex;
     flex-direction: column;
@@ -42,10 +41,11 @@ body {
     margin-left: auto;
   }
   
+  /* Language Switcher */
   .language-switcher {
     position: absolute;
     top: 20px;
-    left: 20px;
+    left:20px;
     z-index: 1000;
   }
   
@@ -57,6 +57,7 @@ body {
     border: 1px solid #1E90FF;
   }
   
+  /* Navigation */
   nav { 
     background-color: #333; 
     overflow: hidden; 
@@ -76,6 +77,7 @@ body {
     color: black; 
   }
   
+  /* Sections */
   section { 
     margin: 20px; 
     padding: 20px; 
@@ -84,6 +86,7 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
   }
   
+  /* About Section Text Wrapping */
   #about p {
     font-size: 1rem;
     word-wrap: break-word;
@@ -94,16 +97,7 @@ body {
     text-align: left;
   }
   
-  #session-timer {
-    position: relative !important;  /* override previous fixed positioning */
-    margin: 0 auto 10px auto;       /* center horizontally with spacing */
-    display: block;
-    text-align: center;
-    color: red;
-    font-weight: bold;
-    font-size: 1.2em;
-  }
-  
+  /* CTA Button */
   .cta-button {
     background-color: #1E90FF;
     color: white !important;
@@ -121,7 +115,11 @@ body {
     transform: translateY(-2px);
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
   }
-  
+  /* Specific fix for registration button */
+  .auth-form button[onclick="handleRegistration()"] {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+  }
+  /* Timeline/Tokenomics */
   .timeline, .tokenomics { 
     display: flex; 
     justify-content: space-between; 
@@ -137,6 +135,7 @@ body {
     margin: 0 5px; 
   }
   
+  /* Arabic RTL Support */
   :root:lang(ar) {
     direction: rtl;
     unicode-bidi: embed;
@@ -179,45 +178,94 @@ body {
     }
   }
   
-  /* === Fixes Added Below === */
-  
-  /* 1. Auth Tabs Hover Effect */
-  .auth-tab:hover {
-    background: rgba(255, 255, 255, 0.1) !important;
+  /* Auth Form Styles */
+  .auth-container {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 10px;
+    align-items: center;
   }
   
-  /* 2. Register Button Shadow Fix */
-  #registerForm .cta-button {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+  .auth-form input {
+    width: 120px;
+    padding: 8px 12px;
+    border: 1px solid #1E90FF;
+    border-radius: 4px;
   }
   
-  /* 3. Mobile Responsiveness Preserved */
+  .auth-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: rgba(255,255,255,0.1);
+    padding: 15px;
+    border-radius: 8px;
+  }
+  
+  .auth-toggle {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .auth-tab {
+    background: none;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+  }
+  
+  .auth-tab.active {
+    background: #1E90FF;
+  }
+  
+  .auth-form {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .auth-form.active {
+    display: flex;
+  }
+  
+  .auth-divider {
+    text-align: center;
+    position: relative;
+    margin: 10px 0;
+  }
+  
+  /* RTL Support for Auth */
+  :lang(ar) .auth-container {
+    right: auto;
+    left: 20px;
+  }
+  
+  :lang(ar) .auth-toggle {
+    flex-direction: row-reverse;
+  }
+  
   @media (max-width: 768px) {
     header {
       flex-direction: column;
       padding: 10px;
     }
-  
+    
     .auth-container {
       position: static;
       width: 100%;
       margin-top: 15px;
     }
-  
+    
     nav a {
       float: none;
       display: block;
       width: 100%;
     }
   }
-
-  /* Flashing animation */
-@keyframes flash {
-  0%   { color: red; }
-  50%  { color: yellow; }
-  100% { color: red; }
-}
-
-#session-timer.flash-warning {
-  animation: flash 1s infinite;
-}

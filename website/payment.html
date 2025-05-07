@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DeFiFuelDeal – Payment & Commissions</title>
+  <link rel="stylesheet" href="styles/main.css" />
+  <script src="https://cdn.jsdelivr.net/npm/ethers/dist/ethers.min.js"></script>
+  <script src="https://unpkg.com/ipfs-http-client/dist/index.min.js"></script>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="logo"><img src="images/blockenergy-logo.jpg" alt="BlockEnergy Logo" /></div>
+    <div class="header-content">
+      <h1>DeFiFuelDeal</h1>
+      <p>Step 3: Payment & Commissions</p>
+    </div>
+  </header>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="index.html">Back to Main Site</a>
+    <a href="auth.html">Authentication</a>
+    <a href="verify.html">Verification</a>
+    <a href="payment.html" class="active">Payment</a>
+    <a href="dapp.html">Dashboard</a>
+  </nav>
+
+  <!-- Main Content -->
+  <main>
+    <section class="content">
+      <h2>Execute Payment</h2>
+      <div class="summary-card">
+        <p><strong>Commodity:</strong> EN590/10ppm Diesel Fuel</p>
+        <p><strong>Quantity:</strong> 100,000 MT</p>
+        <p><strong>Price/unit:</strong> $450</p>
+        <p><strong>Total:</strong> $45,000,000</p>
+      </div>
+      <form id="paymentForm">
+        <label>
+          Payment Method:
+          <select id="paymentMethod">
+            <option value="bank">Bank Transfer</option>
+            <option value="swift">SWIFT</option>
+            <option value="crypto">Crypto</option>
+          </select>
+        </label>
+        <div id="paymentDetails">
+          <!-- dynamic fields based on method -->
+        </div>
+        <button type="submit" class="cta-button">Confirm & Pay</button>
+      </form>
+      <p id="paymentStatus" class="status"></p>
+    </section>
+
+    <section class="content">
+      <h2>Upload Bank Advice</h2>
+      <input type="file" id="adviceInput" />
+      <button id="uploadAdvice" class="cta-button">Submit Advice</button>
+      <p id="adviceStatus" class="status"></p>
+    </section>
+
+    <section class="content">
+      <h2>Commission Distribution</h2>
+      <table>
+        <thead>
+          <tr><th>Party</th><th>%</th><th>Amount (BE)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Seller Side</td><td>50%</td><td id="amtSeller">—</td></tr>
+          <tr><td>Buyer Side</td><td>33.33%</td><td id="amtBuyer">—</td></tr>
+          <tr><td>Thirit Ung</td><td>16.67%</td><td id="amtFacilitator">—</td></tr>
+        </tbody>
+      </table>
+      <button id="disburseCommissions" class="cta-button">Disburse Commissions</button>
+      <p id="commissionStatus" class="status"></p>
+    </section>
+  </main>
+
+  <!-- Placeholder Scripts -->
+  <script>
+    // TODO: implement payment flow, bank advice upload, commission calculations & distributions
+  </script>
+</body>
+</html>

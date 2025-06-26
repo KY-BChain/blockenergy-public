@@ -1,0 +1,271 @@
+/* blockenergy-public/website/styles/main.css */
+
+/* Base Styles */
+body { 
+    font-family: Arial, sans-serif; 
+    margin: 0; 
+    padding: 0;
+    font-size: 16px;
+  }
+  
+  header, footer { 
+    background-color: #1E90FF; 
+    color: white; 
+    padding: 20px; 
+    text-align: center; 
+  }
+  
+  /* Logo Styling */
+  .logo img {
+    width: 150px;
+    height: auto;
+    margin-top: 10px;
+  }
+  
+  /* Header Layout */
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    position: relative;
+    gap: 20px;
+  }
+  
+  /* Right-Aligned Controls Container */
+  .header-right {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-end;
+    margin-left: auto;
+  }
+  
+  /* Language Switcher */
+  .language-switcher {
+    position: absolute;
+    top: 20px;
+    left:20px;
+    z-index: 1000;
+  }
+  
+  .language-switcher select {
+    padding: 8px 12px;
+    border-radius: 5px;
+    background: white;
+    color: #1E90FF;
+    border: 1px solid #1E90FF;
+  }
+  
+  /* Navigation */
+  nav { 
+    background-color: #333; 
+    overflow: hidden; 
+  }
+  
+  nav a { 
+    float: left;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none; 
+  }
+  
+  nav a:hover { 
+    background-color: #ddd; 
+    color: black; 
+  }
+  
+  /* Sections */
+  section { 
+    margin: 20px; 
+    padding: 20px; 
+    border-radius: 10px; 
+    background-color: #f9f9f9; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+  }
+  
+  /* About Section Text Wrapping */
+  #about p {
+    font-size: 1rem;
+    word-wrap: break-word;
+    white-space: normal;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    line-height: 1.6;
+    text-align: left;
+  }
+  
+  /* CTA Button */
+  .cta-button {
+    background-color: #1E90FF;
+    color: white !important;
+    padding: 12px 24px;
+    border: 2px solid white;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .cta-button:hover {
+    background-color: #0066CC;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+  }
+  /* Specific fix for registration button */
+  .auth-form button[onclick="handleRegistration()"] {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+  }
+  /* Timeline/Tokenomics */
+  .timeline, .tokenomics { 
+    display: flex; 
+    justify-content: space-between; 
+    margin: 20px 0; 
+  }
+  
+  .timeline-item, .tokenomics-item { 
+    flex: 1; 
+    text-align: center; 
+    padding: 10px; 
+    border: 1px solid #ddd; 
+    border-radius: 5px; 
+    margin: 0 5px; 
+  }
+  
+  /* Arabic RTL Support */
+  :root:lang(ar) {
+    direction: rtl;
+    unicode-bidi: embed;
+  }
+  
+  :lang(ar) {
+    body, header, footer, section, nav {
+      text-align: right;
+      font-family: Tahoma, Arial, sans-serif;
+    }
+    
+    header { 
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+    }
+    
+    nav a { float: right; }
+    
+    .language-switcher { 
+      left: 20px;
+      right: auto;
+    }
+    
+    .timeline, .tokenomics { 
+      flex-direction: row-reverse; 
+    }
+    
+    #about p {
+      text-align: right;
+      margin: 0;
+    }
+    
+    input, select, textarea { 
+      direction: rtl; 
+    }
+    
+    .header-content {
+      margin-right: 20px;
+      margin-left: 0;
+    }
+  }
+  
+  /* Auth Form Styles */
+  .auth-container {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 10px;
+    align-items: center;
+  }
+  
+  .auth-form input {
+    width: 120px;
+    padding: 8px 12px;
+    border: 1px solid #1E90FF;
+    border-radius: 4px;
+  }
+  
+  .auth-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: rgba(255,255,255,0.1);
+    padding: 15px;
+    border-radius: 8px;
+  }
+  
+  .auth-toggle {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .auth-tab {
+    background: none;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+  }
+  
+  .auth-tab.active {
+    background: #1E90FF;
+  }
+  
+  .auth-form {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .auth-form.active {
+    display: flex;
+  }
+  
+  .auth-divider {
+    text-align: center;
+    position: relative;
+    margin: 10px 0;
+  }
+  
+  /* RTL Support for Auth */
+  :lang(ar) .auth-container {
+    right: auto;
+    left: 20px;
+  }
+  
+  :lang(ar) .auth-toggle {
+    flex-direction: row-reverse;
+  }
+  
+  @media (max-width: 768px) {
+    header {
+      flex-direction: column;
+      padding: 10px;
+    }
+    
+    .auth-container {
+      position: static;
+      width: 100%;
+      margin-top: 15px;
+    }
+    
+    nav a {
+      float: none;
+      display: block;
+      width: 100%;
+    }
+  }

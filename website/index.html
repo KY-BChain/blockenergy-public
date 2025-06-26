@@ -3,224 +3,318 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/main.css">
-    <title>BlockEnergy - Decentralised Energy Trading</title>
-</head>
-<body>
-    <header>
-
-         <!-- Language Switcher Moved to Top-Left -->
-    <div class="language-switcher">
-        <select id="languageSelect">
-            <option value="en">English (UK)</option>
-                    <option value="zh">中文</option>
-                    <option value="fr">Français</option>
-                    <option value="de">Deutsch</option>
-                    <option value="ja">日本語</option>
-                    <option value="ko">한국어</option>
-                    <option value="ru">Русский</option>
-                    <option value="ar">العربية</option>
-        </select>
-    </div>
-        <div class="logo">
-            <img src="images/blockenergy-logo.jpg" alt="BlockEnergy Logo">
-         <!-- <img src="images/metamask-icon.svg" alt="MetaMask" width="20"> -->
-        </div>
-      
-        <div class="header-content">
-            <h1 data-translate="companyTitle">BlockEnergy</h1>
-            <p data-translate="companyTagline">Decentralised Energy and Commodity Trading Platform</p>
-        </div>
-
-        <div class="header-right">
-        <!-- Auth Section -->
-            <div class="auth-container">
-
-            <!--  <div class="auth-toggle">
-                    <button class="auth-tab active" onclick="showForm('login')">Login</button>
-                    <button class="auth-tab" onclick="showForm('register')">Register</button>
-                </div> -->
-                <!-- Session timer -->
-                <div id="session-timer">
-                    <span style="margin-right: 5px;">⏱️</span>
-                    <span id="timer-text"></span>
-                </div>
-
-                <!-- Forms Container -->
-                <div class="auth-forms">
-                    <!-- Login Form (Default Visible) -->
-                    <div id="loginForm" class="auth-form active">
-                        <input type="email" id="authEmail" placeholder="Email">
-                        <input type="password" id="authPassword" placeholder="Password">
-                        <button class="cta-button" onclick="handleLogin()">Login</button>
-                    </div>
-
-                    <!-- Registration Form (Hidden Initially) -->
-                    <div id="registerForm" class="auth-form">
-                        <input type="email" id="regEmail" placeholder="Email">
-                        <input type="password" id="regPassword" placeholder="Create Password">
-                        <button class="cta-button" onclick="handleRegistration()">Register</button>
-                    </div>
-                </div>
-
-                <!-- Wallet Connect -->
-                <div class="auth-divider">OR</div>
-                <button class="cta-button" onclick="connectWallet()">
-                    <img src="images/metamask-icon.png" alt="MetaMask" width="20">
-                    Connect Wallet
-                </button>
-            </div>
-        </div>
-    </header>
-  
-    <!-- Web3 Script -->
-
-    <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
-    <script>
-        const connectWallet = async () => {
-            if (window.ethereum) {
-                try {
-                    await window.ethereum.request({ method: 'eth_requestAccounts' });
-                    const web3 = new Web3(window.ethereum);
-                    const accounts = await web3.eth.getAccounts();
-                    alert(`Connected: ${accounts[0]}`);
-                } catch (error) {
-                    console.error(error);
-                }
-            } else {
-                alert("Please install MetaMask!");
+    <title>BlockEnergy - Decentralized Solutions</title>
+    <style>
+        :root {
+            --primary: #1a56db;
+            --secondary: #0e9f6e;
+            --dark: #1f2937;
+            --light: #f9fafb;
+            --accent-defi: #4f46e5;
+            --accent-acr: #db2777;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: var(--light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        /* Header Styles */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 24px;
+        }
+        
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #4ade80, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* Main Content */
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        
+        .hero {
+            max-width: 800px;
+            margin-bottom: 3rem;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            background: linear-gradient(to right, #e0f2fe, #f0fdfa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            color: #cbd5e1;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+        }
+        
+        .platforms {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .platform-card {
+            background: rgba(30, 41, 59, 0.7);
+            border-radius: 20px;
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 450px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .platform-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .defi-card {
+            border-top: 4px solid var(--accent-defi);
+        }
+        
+        .acr-card {
+            border-top: 4px solid var(--accent-acr);
+        }
+        
+        .platform-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+        }
+        
+        .defi-icon {
+            background: rgba(79, 70, 229, 0.2);
+            color: var(--accent-defi);
+        }
+        
+        .acr-icon {
+            background: rgba(219, 39, 119, 0.2);
+            color: var(--accent-acr);
+        }
+        
+        .platform-card h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .platform-card p {
+            color: #94a3b8;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.9rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .defi-btn {
+            background: var(--accent-defi);
+            color: white;
+        }
+        
+        .defi-btn:hover {
+            background: #4338ca;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);
+        }
+        
+        .acr-btn {
+            background: var(--accent-acr);
+            color: white;
+        }
+        
+        .acr-btn:hover {
+            background: #be185d;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(219, 39, 119, 0.3);
+        }
+        
+        /* Footer */
+        footer {
+            background: rgba(15, 23, 42, 0.9);
+            padding: 2.5rem;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #4ade80, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .footer-text {
+            color: #94a3b8;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .legal {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
             }
-        };
-    </script>
-    
-    <!-- Language Switcher Script -->
-    <script src="scripts/language-switcher.js"></script>
-    
-    <!-- User log in -->
-    <script>
-        // Auth verification
-        async function verifyAccess() {
-            const uid = document.getElementById('authUid').value;
-            const password = document.getElementById('authPass').value;
             
-        // Simple credential check
-            const validCredentials = {
-                "user1": "pass1",
-                "user2": "pass2"
-            };
-    
-            if(validCredentials[uid] === password) {
-                window.location.href = '/dapp.html';
-            } else {
-                alert("Invalid credentials");
+            .platforms {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .platform-card {
+                padding: 2rem;
             }
         }
-    </script>
-    
-        <nav>
-            <a href="#about" data-translate="navAbout">About</a>
-            <a href="#features" data-translate="navFeatures">Features</a>
-            <a href="#technology" data-translate="navTechnology">Technology</a>
-            <a href="#roadmap" data-translate="navRoadmap">Roadmap</a>
-            <a href="#tokenomics" data-translate="navTokenomics">Tokenomics</a>
-            <a href="#contact" data-translate="navContact">Contact</a>
-        </nav>
-    
-        <!-- About Section -->
-        <section id="about">
-            <h2 data-translate="aboutHeading">About BlockEnergy</h2>
-            <p data-translate="aboutText">BlockEnergy (BE) is a decentralised platform leveraging <strong>blockchain</strong>, <strong>AI</strong>, and <strong>DeFi</strong> to revolutionize global energy and commodity trading. BE enables <strong>Transactive Energy</strong>, <strong>petroleum product trading</strong>, and <strong>carbon credit trading</strong> with transparency and efficiency for today's Real World Assets <strong>"RWA"</strong></p>        
-        </section>
-    
-        <!-- Features Section -->
-        <section id="features">
-            <h2 data-translate="featuresHeading">Features</h2>
-            <div class="content">
-                <p data-translate="feature1"><strong>Decentralised Trading:</strong> Powered by Fetch.ai’s Autonomous Economic Agents (AEAs).</p>
-                <p data-translate="feature2"><strong>AI-Driven Insights:</strong> Enhanced by DeepSeek’s analytics and automation.</p>
-                <p data-translate="feature3"><strong>Multi-Currency StableCoins:</strong> CBDC-pegged StableCoins for cross-border transactions.</p>
-                <p data-translate="feature4"><strong>Regulatory Compliance:</strong> Automated compliance with EU ETS, Chinese carbon credit frameworks, and more.</p>
-                <p data-translate="feature5"><strong>Sustainability:</strong> Supporting green energy projects and EV infrastructure.</p>
+        /* For mobile responsiveness */
+        @media (max-width: 768px) {
+            header {
+                padding-left: 0.005cm;
+            }
+        .logo-container {
+            gap: 0.005cm;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header style="padding-left: 1cm;">
+        <div class="logo-container">
+            <div class="logo" style="margin-right: 1cm;">
+                <img src="acr-website/images/blockenergy-logo.jpg" alt="BlockEnergy Logo" style="width: 150px; height: 50px;">
             </div>
-        </section>
-    
-        <!-- Technology Section -->
-        <section id="technology">
-            <h2 data-translate="technologyHeading">Technology</h2>
-            <div class="content">
-                <p data-translate="tech1"><strong>Fetch.ai:</strong> AEAs for decentralized trading and IoT integration.</p>
-                <p data-translate="tech2"><strong>DeepSeek:</strong> AI for market analysis, risk assessment, and document automation.</p>
-                <p data-translate="tech3"><strong>Blockchain:</strong> Built on Cosmos SDK for scalability and interoperability.</p>
-                <p data-translate="tech4"><strong>Web3:</strong> Decentralized hosting on IPFS and blockchain-based authentication.</p>
-            </div>
-        </section>
-    
-        <!-- Roadmap Section -->
-        <section id="roadmap">
-            <h2 data-translate="roadmapHeading">Roadmap</h2>
-            <div class="timeline">
-                <div class="timeline-item" data-translate="roadmapQ1">
-                    <h3>Q1 2025</h3>
-                    <p>Platform development (blockchain, AEAs, AI modules).</p>
-                </div>
-                <div class="timeline-item" data-translate="roadmapQ2">
-                    <h3>Q2 2025</h3>
-                    <p>Pilot projects (EV charging in GBA, transactive energy grid in EU).</p>
-                </div>
-                <div class="timeline-item" data-translate="roadmapQ3">
-                    <h3>Q3 2025</h3>
-                    <p>Full deployment (carbon credit trading, petroleum product trading).</p>
-                </div>
-                <div class="timeline-item" data-translate="roadmapQ4">
-                    <h3>Q4 2025</h3>
-                    <p>Global expansion (Asia, EU, North America, Middle East).</p>
-                </div>
-            </div>
-        </section>
-    
-        <!-- Tokenomics Section -->
-        <section id="tokenomics">
-            <h2 data-translate="tokenomicsHeading">Tokenomics</h2>
-            <div class="tokenomics">
-                <div class="tokenomics-item" data-translate="token1">
-                    <h3>Energy Tokens</h3>
-                    <p>For P2P energy trading in TransActive Energy.</p>
-                </div>
-                <div class="tokenomics-item" data-translate="token2">
-                    <h3>Carbon Credits</h3>
-                    <p>Tokenised EUAs and Chinese carbon credits.</p>
-                </div>
-                <div class="tokenomics-item" data-translate="token3">
-                    <h3>StableCoins</h3>
-                    <p>Multi-currency/CBDC-pegged for cross-border transactions.</p>
-                </div>
-                <div class="tokenomics-item" data-translate="token4">
-                    <h3>Governance Tokens</h3>
-                    <p>For platform governance.</p>
-                </div>
-            </div>
-        </section>
-    
-        <!-- Web3 Integration Section -->
-        <div class="web3-section">
-            <h2 data-translate="web3Heading">Web3 Integration</h2>
-            <p data-translate="web3Text">Connect your wallet to interact with BlockEnergy’s decentralised platform.</p>
-            <button onclick="connectWallet()" data-translate="connectWallet">Connect Wallet</button>
+            <div class="logo-text">BlockEnergy</div>
         </div>
+    </header>    
+    <main>
+        <div class="hero">
+            <h1>Powering the Future with Decentralised Solutions</h1>
+            <p>BlockEnergy develops cutting-edge Web3 platforms that transform industries through blockchain technology, AI innovation, and decentralised architectures.</p>
+        </div>
+        
+        <div class="platforms">
+            <div class="platform-card defi-card">
+                <div class="platform-icon defi-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
+                        <path d="M3 6h18"></path>
+                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                    </svg>
+                </div>
+                <h2>DeFi Platform</h2>
+                <p>Revolutionising energy and commodity trading through decentralised trade-finance. Our platform enables transparent, efficient tokenisation of real-world assets (RWA) for global energy markets.</p>
+                <a href="./defi-website/" class="btn defi-btn">Enter DeFi Platform</a>
+            </div>
+            
+            <div class="platform-card acr-card">
+                <div class="platform-icon acr-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m12 14 4-4"></path>
+                        <path d="M3.34 19a10 10 0 1 1 17.32 0"></path>
+                    </svg>
+                </div>
+                <h2>ACR HealthCare</h2>
+                <p>Transforming cancer research through AI-powered diagnostics. Our ACR platform uses advanced radiomics and federated learning for early detection of gynecological cancers while preserving patient privacy.</p>
+                <a href="./acr-website/" class="btn acr-btn">Enter ACR Platform</a>
+            </div>
+        </div>
+    </main>
     
-        <!-- Contact Section -->
-        <section id="contact">
-            <h2 data-translate="contactHeading">Contact Us</h2>
-            <p>Email: <a href="mailto:info@blockenergy.net">info@blockenergy.net</a></p>
-            <p>Telegram: <a href="https://t.me/blockenergy">t.me/blockenergy</a></p>
-            <p>Twitter: <a href="https://twitter.com/blockenergy">@blockenergy</a></p>
-            <p>GitHub: <a href="https://github.com/blockenergy">github.com/blockenergy</a></p>
-        </section>
-    
-        <footer>
-            <p data-translate="footerText">BlockEnergy © is a registered business name of CRIL, Ireland, and SKL, HKSAR.</p>
-        </footer>
-    
-    <script type="module" src="scripts/auth.js"></script>
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">BlockEnergy</div>
+            <p class="footer-text">Decentralised solutions for real-world challenges</p>
+            <p class="legal">BlockEnergy © is a registered business name of CRIL, Ireland, and SKL, HKSAR.</p>
+        </div>
+    </footer>
 </body>
 </html>

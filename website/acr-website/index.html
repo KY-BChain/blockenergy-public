@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlockEnergy ACR - AI Cancer Research</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* === BASE STYLES === */
+        :root { 
+            font-size: 16px; 
+        }
+
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0; 
+            padding: 0;
+            font-size: 16px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* === FIXED NAVIGATION BAR === */
+        nav { 
+            background-color: #1a365d; 
+            overflow: hidden; 
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 0 20px;
+        }
+        
+        nav a { 
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 18px 22px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        nav a:hover { 
+            background-color: #2c5282; 
+            color: #fff; 
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background-color: #63b3ed;
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover::after {
+            width: 80%;
+        }
+        
+        /* === HEADER ADJUSTMENT FOR FIXED NAV === */
+        header {
+            margin-top: 60px; /* Height of fixed nav */
+        }
+        
+        /* === SECTION NAVIGATION BUTTONS === */
+        .section-nav {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            z-index: 10;
+        }
+        
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #1E90FF;
+            color: white;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        /* NEW: Smaller back-to-top button */
+        .nav-btn.back-to-top {
+            width: 24px; /* 60% of 40px */
+            height: 24px; /* 60% of 40px */
+            font-size: 12px; /* 60% of 18px */
+            background-color: #0066CC; /* Different color for visibility */
+        }
+        
+        .nav-btn:hover {
+            background-color: #0066CC;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.25);
+        }
+        
+        /* === HEADER STYLES === */
+        header, footer { 
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white; 
+            padding: 30px 20px; 
+            text-align: center; 
+        }
+        
+        .logo img {
+            width: 150px;
+            height: auto;
+            margin-top: 10px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            gap: 20px;
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-right {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: flex-end;
+            margin-left: auto;
+        }
+        
+        .language-switcher {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+        
+        .language-switcher select {
+            padding: 8px 12px;
+            border-radius: 5px;
+            background: white;
+            color: #1E90FF;
+            border: 1px solid #1E90FF;
+            font-weight: 500;
+        }
+        
+        /* === SECTION STYLES === */
+        section { 
+            margin: 40px 20px; 
+            padding: 30px; 
+            border-radius: 15px; 
+            background-color: white; 
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); 
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+        
+        h2 {
+            color: #1e3c72;
+            border-bottom: 3px solid #63b3ed;
+            padding-bottom: 12px;
+            margin-top: 0;
+            font-size: 2rem;
+        }
+        
+        /* === ABOUT SECTION === */
+        #about p {
+            font-size: 1.1rem;
+            word-wrap: break-word;
+            white-space: normal;
+            overflow-wrap: break-word;
+            max-width: 100%;
+            line-height: 1.8;
+            text-align: left;
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+        
+        .content-card {
+            background: #f0f9ff;
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            border: 1px solid #e2f1ff;
+        }
+        
+        .content-card:hover {
+            background: #e1f0ff;
+            transform: translateY(-5px);
+        }
+        
+        .content-card h3 {
+            color: #1e3c72;
+            margin-top: 0;
+        }
+        
+        /* === TECHNOLOGY SECTION === */
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+        
+        .tech-item {
+            text-align: center;
+            padding: 25px 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .tech-item:hover {
+            background: #e9ecef;
+            transform: translateY(-5px);
+        }
+        
+        .tech-item img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+        
+        /* === FEATURES SECTION === */
+        .feature-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+        
+        .feature {
+            background: #f0f9ff;
+            border-radius: 12px;
+            padding: 25px;
+            border-left: 4px solid #1E90FF;
+        }
+        
+        .feature h3 {
+            color: #1e3c72;
+            margin-top: 0;
+        }
+        
+        .feature ul {
+            padding-left: 20px;
+        }
+        
+        .feature li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        
+        /* === WORKFLOW SECTION === */
+        .workflow-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .step {
+            text-align: center;
+            padding: 25px 20px;
+            background: #f0f9ff;
+            border-radius: 12px;
+            position: relative;
+            border: 1px solid #cfe8ff;
+        }
+        
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background: #1E90FF;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* === TEAM SECTION === */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            justify-items: center;
+            margin: 30px 0;
+        }
+        
+        .team-member {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 280px;
+            padding: 25px;
+            background: #f0f9ff;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .team-member:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* FIXED: Logo classes with proper sizing */
+        .university-logo {
+            max-height: 90px;
+            width: auto;
+            object-fit: contain;
+            margin-bottom: 15px;
+        }
+        
+        .blockenergy-logo {
+            max-height: 30px; /* Reduced size */
+            width: auto;
+            object-fit: contain;
+            margin-bottom: 15px;
+        }
+        
+        .team-member h3 {
+            color: #1e3c72;
+            margin: 15px 0 5px;
+        }
+        
+        .governance {
+            background: #f0f9ff;
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 30px;
+            border-left: 4px solid #1E90FF;
+        }
+        
+        /* === CONTACT SECTION === */
+        .contact-methods {
+            background: #f0f9ff;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+        
+        .contact-methods p {
+            margin: 15px 0;
+            font-size: 1.1rem;
+        }
+        
+        .contact-methods a {
+            color: #1E90FF;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-methods a:hover {
+            color: #0066CC;
+            text-decoration: underline;
+        }
+        
+        .contact-form {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+        
+        .contact-form h3 {
+            margin-top: 0;
+            color: #1e3c72;
+            border-bottom: 2px solid #63b3ed;
+            padding-bottom: 10px;
+        }
+        
+        #researchContactForm {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        #researchContactForm input,
+        #researchContactForm textarea {
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        #researchContactForm input:focus,
+        #researchContactForm textarea:focus {
+            border-color: #1E90FF;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(30, 144, 255, 0.2);
+        }
+        
+        #researchContactForm textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        #researchContactForm button[type="submit"] {
+            background: linear-gradient(to right, #1E90FF, #0066CC);
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        #researchContactForm button[type="submit"]:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* === FOOTER === */
+        footer {
+            background: linear-gradient(135deg, #1a365d 0%, #1e3c72 100%);
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 15px 15px 0 0;
+            margin-top: 50px;
+        }
+        
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #63b3ed, #90cdf4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .footer-text {
+            color: #cbd5e0;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+        
+        .legal {
+            color: #a0aec0;
+            font-size: 0.9rem;
+            margin-top: 25px;
+        }
+        
+        /* === RESPONSIVE STYLES === */
+        @media (max-width: 992px) {
+            .content-grid, .tech-stack, .feature-container, 
+            .workflow-steps, .team-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+            
+            header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .header-right {
+                align-items: center;
+                margin: 20px auto 0;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            nav a {
+                padding: 14px 12px;
+                font-size: 0.9rem;
+            }
+            
+            .language-switcher {
+                position: relative;
+                top: 0;
+                left: 0;
+                margin-bottom: 15px;
+            }
+            
+            .section-nav {
+                bottom: 15px;
+                right: 15px;
+            }
+            
+            section {
+                padding: 25px 20px;
+                margin: 30px 15px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            nav a {
+                padding: 12px 8px;
+                font-size: 0.85rem;
+            }
+            
+            .nav-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 16px;
+            }
+            
+            .content-grid, .tech-stack, .feature-container, 
+            .workflow-steps, .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Fixed Navigation Bar -->
+    <nav>
+        <a href="#about" data-translate="navAbout">About ACR</a>
+        <a href="#technology" data-translate="navTechnology">Technology</a>
+        <a href="#features" data-translate="navFeatures">Research Framework</a>
+        <a href="#workflow" data-translate="navWorkflow">Workflow</a>
+        <a href="#team" data-translate="navTeam">Research Consortium</a>
+        <a href="#contact" data-translate="navContact">Contact</a>
+    </nav>
+
+    <header>
+        <div class="language-switcher">
+            <select id="languageSelect">
+                <option value="en">English (UK)</option>
+                <option value="zh">中文</option>
+                <option value="fr">Français</option>
+                <option value="de">Deutsch</option>
+                <option value="ja">日本語</option>
+                <option value="ko">한국어</option>
+                <option value="ru">Русский</option>
+                <option value="ar">العربية</option>
+            </select>
+        </div>
+        <div class="logo">
+            <!-- Fixed: Correct logo path -->
+            <img src="images/blockenergy-logo.jpg" alt="BlockEnergy Logo">
+        </div>
+      
+        <div class="header-content">
+            <h1 data-translate="companyTitle">BlockEnergy ACR</h1>
+            <p data-translate="companyTagline">Decentralised AI Cancer Research Platform</p>
+        </div>
+
+        <div class="header-right">
+            <div class="auth-container">
+                <div id="session-timer">
+                    <span style="margin-right: 5px;">⏱️</span>
+                    <span id="timer-text"></span>
+                </div>
+
+                <div class="auth-forms">
+                    <div id="loginForm" class="auth-form active">
+                        <input type="email" id="authEmail" placeholder="Research Email" data-translate-placeholder="emailPlaceholder">
+                        <input type="password" id="authPassword" placeholder="Password" data-translate-placeholder="passwordPlaceholder">
+                        <button class="cta-button" onclick="handleLogin()" data-translate="loginButton">Researcher Login</button>
+                    </div>
+                </div>
+
+                <div class="auth-divider" data-translate="orText">OR</div>
+                <button class="cta-button" onclick="connectWallet()">
+                    <img src="images/metamask-icon.png" alt="MetaMask" width="20">
+                    <span data-translate="connectWallet">Connect Research Wallet</span>
+                </button>
+            </div>
+        </div>
+    </header>
+  
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2 data-translate="heroHeading">Revolutionising Cancer Research with AI & Blockchain</h2>
+            <p data-translate="heroText">Privacy-preserving federated learning for early detection of breast and cervical cancer</p>
+            <button class="cta-button" data-translate="heroButton">Join Research Network</button>
+        </div>
+        <div class="hero-badges">
+            <span class="badge" data-translate="badgeGDPR">GDPR Compliant</span>
+            <span class="badge" data-translate="badgeHIPAA">HIPAA Certified</span>
+            <span class="badge" data-translate="badgeFederated">Federated Learning</span>
+        </div>
+        
+        <!-- Navigation buttons -->
+        <div class="section-nav">
+            <div class="nav-btn" onclick="scrollToSection('about')">
+                <i class="fas fa-arrow-down"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <h2 data-translate="aboutHeading">About ACR Platform</h2>
+        <div class="content-grid">
+            <div class="content-card">
+                <h3 data-translate="aboutCard1Title">Mission</h3>
+                <p data-translate="aboutCard1Text">Enhancing early prevention and diagnosis of breast and cervical cancer through decentralised AI research while preserving patient privacy.</p>
+            </div>
+            <div class="content-card">
+                <h3 data-translate="aboutCard2Title">Technology</h3>
+                <p data-translate="aboutCard2Text">Combining radiomics, federated learning, and blockchain to create a secure global research network.</p>
+            </div>
+            <div class="content-card">
+                <h3 data-translate="aboutCard3Title">Impact</h3>
+                <p data-translate="aboutCard3Text">Processing 1,200+ cancer cases annually through our clinical validation network.</p>
+            </div>
+        </div>
+        
+        <!-- Navigation buttons with fixed back-to-top -->
+        <div class="section-nav">
+            <div class="nav-btn" onclick="scrollToSection('technology')">
+                <i class="fas fa-arrow-down"></i>
+            </div>
+            <div class="nav-btn back-to-top" onclick="scrollToTop()">
+                <i class="fas fa-arrow-up"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Section -->
+    <section id="technology">
+        <h2 data-translate="technologyHeading">Core Technology</h2>
+        <div class="tech-stack">
+            <div class="tech-item">
+                <img src="images/ai-icon.png" alt="AI Diagnostics">
+                <h3 data-translate="tech1">AI Diagnostics</h3>
+                <p data-translate="tech1Text">Deep learning models for tumor characterisation using MRI, CT, and ultrasound imaging.</p>
+            </div>
+            <div class="tech-item">
+                <img src="images/blockchain-icon.png" alt="Federated Learning">
+                <h3 data-translate="tech2">Federated Learning</h3>
+                <p data-translate="tech2Text">Collaborative model training without sharing sensitive patient data.</p>
+            </div>
+            <div class="tech-item">
+                <img src="images/ontology-icon.png" alt="OWL Ontology">
+                <h3 data-translate="tech3">OWL Ontology</h3>
+                <p data-translate="tech3Text">Semantic framework for standardised cancer data representation.</p>
+            </div>
+            <div class="tech-item">
+                <img src="images/web3-icon.png" alt="Web3 Infrastructure">
+                <h3 data-translate="tech4">Web3 Infrastructure</h3>
+                <p data-translate="tech4Text">Decentralized storage with IPFS and blockchain-based authentication.</p>
+            </div>
+        </div>
+        
+        <!-- Navigation buttons with fixed back-to-top -->
+        <div class="section-nav">
+            <div class="nav-btn" onclick="scrollToSection('features')">
+                <i class="fas fa-arrow-down"></i>
+            </div>
+            <div class="nav-btn back-to-top" onclick="scrollToTop()">
+                <i class="fas fa-arrow-up"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features">
+        <h2 data-translate="featuresHeading">Research Framework</h2>
+        <div class="feature-container">
+            <div class="feature">
+                <h3 data-translate="feature1">Radiomics Analysis</h3>
+                <ul>
+                    <li data-translate="feature1a">Automated extraction of 1000+ quantitative features</li>
+                    <li data-translate="feature1b">Intratumoral and peritumoral segmentation</li>
+                    <li data-translate="feature1c">Prediction of lymphovascular space invasion (LVSI)</li>
+                </ul>
+            </div>
+            <div class="feature">
+                <h3 data-translate="feature2">Clinical Validation</h3>
+                <ul>
+                    <li data-translate="feature2a">Multi-ethnic validation cohorts</li>
+                    <li data-translate="feature2b">Integration with O-RADS scoring system</li>
+                    <li data-translate="feature2c">AUC of 0.97 in ovarian cancer detection</li>
+                </ul>
+            </div>
+            <div class="feature">
+                <h3 data-translate="feature3">Privacy Framework</h3>
+                <ul>
+                    <li data-translate="feature3a">GDPR/PIPL compliant architecture</li>
+                    <li data-translate="feature3b">Zero-knowledge proof verification</li>
+                    <li data-translate="feature3c">Patient-controlled data access</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Navigation buttons with fixed back-to-top -->
+        <div class="section-nav">
+            <div class="nav-btn" onclick="scrollToSection('workflow')">
+                <i class="fas fa-arrow-down"></i>
+            </div>
+            <div class="nav-btn back-to-top" onclick="scrollToTop()">
+                <i class="fas fa-arrow-up"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Workflow Section -->
+    <section id="workflow">
+        <h2 data-translate="workflowHeading">Clinical Workflow</h2>
+        <div class="workflow-steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3 data-translate="step1">Image Acquisition</h3>
+                <p data-translate="step1Text">DICOM images collected from partner hospitals</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3 data-translate="step2">Feature Extraction</h3>
+                <p data-translate="step2Text">AI models extract radiomic features locally</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3 data-translate="step3">Federated Learning</h3>
+                <p data-translate="step3Text">Model updates shared via blockchain</p>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <h3 data-translate="step4">Clinical Decision</h3>
+                <p data-translate="step4Text">BI-RADS scoring and treatment pathways</p>
+            </div>
+        </div>
+        
+        <div class="architecture-diagram">
+            <img src="images/acr-architecture.png" alt="ACR Architecture Diagram" data-translate-alt="architectureAlt">
+            <p class="caption" data-translate="architectureCaption">ACR Platform Architecture: Combining AI, Blockchain, and Clinical Systems</p>
+        </div>
+        
+        <!-- Navigation buttons with fixed back-to-top -->
+        <div class="section-nav">
+            <div class="nav-btn" onclick="scrollToSection('team')">
+                <i class="fas fa-arrow-down"></i>
+            </div>
+            <div class="nav-btn back-to-top" onclick="scrollToTop()">
+                <i class="fas fa-arrow-up"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team">
+        <h2 data-translate="teamHeading">Research Consortium</h2>
+        <div class="team-grid">
+            <!-- University College Dublin -->
+            <div class="team-member">
+                <img src="images/ucd-logo-final.png" alt="University College Dublin" class="university-logo">
+                <h3 data-translate="team1">UCD School of Medicine</h3>
+                <p data-translate="team1Role">Clinical Research & Validation</p>
+            </div>
+            
+            <!-- Zhengzhou University -->
+            <div class="team-member">
+                <img src="images/zhengzhou-logo-final.png" alt="Zhengzhou University" class="university-logo">
+                <h3 data-translate="team2">Zhengzhou University</h3>
+                <p data-translate="team2Role">Radiomics and diagnostics for gynaecological tumours</p>
+            </div>
+            
+            <!-- BlockEnergy Corporate Logo -->
+            <div class="team-member">
+                <!-- FIXED: Correct logo path and class -->
+                <img src="images/blockenergy-logo.jpg" alt="BlockEnergy" class="blockenergy-logo">
+                <h3 data-translate="team3">BlockEnergy</h3>
+                <p data-translate="team3Role">AI-Ontology, Blockchain & Platform Engineering</p>
+            </div>
+        </div>
+        
+        <div class="governance">
+            <h3 data-translate="governanceHeading">Research Governance</h3>
+            <ul>
+                <li data-translate="gov1">Steering Committee: Co-chaired by UCD and Zhengzhou oncology leads</li>
+                <li data-translate="gov2">3 specialized technical workgroups (Imaging AI, Molecular Diagnostics, Implementation Science)</li>
+                <li data-translate="gov3">Secure federated learning infrastructure maintaining GDPR/PIPL compliance</li>
+            </ul>
+        </div>
+        
+        <!-- Navigation buttons with fixed back-to-top -->
+        <div class="section-nav">
+            <div class="nav-btn" onclick="scrollToSection('contact')">
+                <i class="fas fa-arrow-down"></i>
+            </div>
+            <div class="nav-btn back-to-top" onclick="scrollToTop()">
+                <i class="fas fa-arrow-up"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2 data-translate="contactHeading">Contact Research Team</h2>
+        <div class="contact-methods">
+            <p>Email: <a href="mailto:acr@blockenergy.eu">acr@blockenergy.eu</a></p>
+            <p>Research Portal: <a href="https://acr.blockenergy.eu">acr.blockenergy.eu</a></p>
+            <p>Github: <a href="https://github.com/blockenergy/acr">github.com/blockenergy/acr</a></p>
+        </div>
+        
+        <div class="contact-form">
+            <h3 data-translate="contactFormHeading">Become a Research Partner</h3>
+            <form id="researchContactForm">
+                <input type="text" placeholder="Institution Name" data-translate-placeholder="institutionPlaceholder">
+                <input type="email" placeholder="Contact Email" data-translate-placeholder="emailPlaceholder">
+                <textarea placeholder="Research Interests" data-translate-placeholder="interestsPlaceholder"></textarea>
+                <button type="submit" data-translate="submitButton">Submit Inquiry</button>
+            </form>
+        </div>
+        
+        <!-- Navigation buttons with fixed back-to-top -->
+        <div class="section-nav">
+            <div class="nav-btn back-to-top" onclick="scrollToTop()">
+                <i class="fas fa-arrow-up"></i>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">BlockEnergy</div>
+            <div class="footer-info">
+                <p data-translate="footerText">BlockEnergy ACR © is a research initiative of CRIL, Ireland, and Zhengzhou University Oncology.</p>
+                <div class="compliance-badges">
+                    <img src="images/gdpr-badge.png" alt="GDPR Compliant">
+                    <img src="images/hipaa-badge.png" alt="HIPAA Compliant">
+                    <img src="images/research-ethics.png" alt="Research Ethics Approved">
+                </div>
+            </div>
+            <div class="legal">
+                <p>Privacy Policy | Terms of Service | Research Ethics Compliance</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation functions
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+        
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+        
+        // Form submission handler
+        document.getElementById('researchContactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const institution = this.querySelector('input[type="text"]').value;
+            const email = this.querySelector('input[type="email"]').value;
+            const interests = this.querySelector('textarea').value;
+            
+            // Simple validation
+            if (!institution || !email || !interests) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            // Create mailto link (for demo purposes)
+            const subject = 'Research Partnership Inquiry';
+            const body = `Institution: ${institution}%0D%0AEmail: ${email}%0D%0AInterests: ${interests}`;
+            const mailtoLink = `mailto:acr@blockenergy.eu?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            
+            // Open email client
+            window.location.href = mailtoLink;
+            
+            // Reset form
+            this.reset();
+            
+            // Show success message
+            alert('Your inquiry has been prepared. Please send the email that opened in your email client.');
+        });
+        
+        // Wallet connection simulation
+        function connectWallet() {
+            alert('Wallet connection functionality would be implemented here');
+        }
+        
+        // Language switcher simulation
+        document.getElementById('languageSelect').addEventListener('change', function() {
+            alert(`Language changed to: ${this.options[this.selectedIndex].text}`);
+        });
+    </script>
+    <!-- Language Switcher Script -->
+    <script src="scripts/language-switcher.js"></script>
+</body>
+</html>

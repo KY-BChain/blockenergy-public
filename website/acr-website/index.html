@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BlockEnergy ACR - AI Cancer Research</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Add to HEAD section -->
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script>
+        (function() {
+            // Initialize EmailJS with your account ID
+            emailjs.init("YOUR_EMAILJS_USER_ID"); // Replace with your actual ID
+        })();
+    </script>
+    
     <style>
         /* === BASE STYLES === */
         :root { 
@@ -840,7 +849,85 @@
                 <button type="submit" data-translate="submitButton">Submit Inquiry</button>
             </form>
         </div>
-        
+    <!-- Add below the contact form -->
+        <div id="verification-section" style="display: none;">
+            <h4 data-translate="verifyHeading">Verify Your Email Address</h4>
+            <p data-translate="verifyText">We've sent a verification code to your email. Please enter it below:</p>
+            <input type="text" id="verification-code" placeholder="Verification Code">
+            <button onclick="verifyCode()" data-translate="verifyButton">Verify</button>
+            <p id="verification-status"></p>
+        </div>
+
+        <script>
+            // Generate random verification code
+            function generateVerificationCode() {
+              return Math.floor(100000 + Math.random() * 900000);
+            }
+          
+            // Handle form submission
+            document.getElementById('researchContactForm').addEventListener('submit', function(e) {
+              e.preventDefault();
+              
+              const institution = this.querySelector('[name="institution"]').value;
+              const email = this.querySelector('[name="email"]').value;
+              const interests = this.querySelector('[name="interests"]').value;
+              
+              // Generate and store verification code
+              const verificationCode = generateVerificationCode();
+              sessionStorage.setItem('verificationData', JSON.stringify({
+                institution,
+                email,
+                interests,
+                code: verificationCode
+              }));
+              
+              // Send verification email
+              emailjs.send("YOUR_EMAILJS_SERVICE_ID", "YOUR_EMAILJS_TEMPLATE_ID", {
+                to_email: email,
+                verification_code: verificationCode,
+                institution: institution
+              }).then(function(response) {
+                console.log("Verification email sent", response);
+                // Show verification section
+                document.getElementById('verification-section').style.display = 'block';
+              }, function(error) {
+                console.error("Email send failed", error);
+                alert("Error sending verification email. Please try again.");
+              });
+            });
+          
+            // Verify code and send final email
+            function verifyCode() {
+              const verificationData = JSON.parse(sessionStorage.getItem('verificationData'));
+              const enteredCode = document.getElementById('verification-code').value;
+              
+              if(parseInt(enteredCode) === verificationData.code) {
+                // Send data to project email
+                emailjs.send("YOUR_EMAILJS_SERVICE_ID", "YOUR_PROJECT_EMAIL_TEMPLATE_ID", {
+                  to_email: "acr@blockenergy.eu",
+                  institution: verificationData.institution,
+                  contact_email: verificationData.email,
+                  research_interests: verificationData.interests
+                }).then(function(response) {
+                  document.getElementById('verification-status').textContent = 
+                    "Verification successful! Your inquiry has been sent to the research team.";
+                  document.getElementById('verification-status').style.color = "green";
+                  
+                  // Reset form and verification
+                  document.getElementById('researchContactForm').reset();
+                  sessionStorage.removeItem('verificationData');
+                  setTimeout(() => {
+                    document.getElementById('verification-section').style.display = 'none';
+                  }, 5000);
+                });
+              } else {
+                document.getElementById('verification-status').textContent = 
+                  "Invalid verification code. Please check your email and try again.";
+                document.getElementById('verification-status').style.color = "red";
+              }
+            }
+          </script>
+
         <!-- Navigation buttons with fixed back-to-top -->
         <div class="section-nav">
             <div class="nav-btn back-to-top" onclick="scrollToTop()">

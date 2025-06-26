@@ -224,7 +224,7 @@ body {
 
 /* ===== ADD TO EXISTING STYLES ===== */
 
-/* Team member logo styling */
+/* Team Section Logo Styling */
 .team-member {
   display: flex;
   flex-direction: column;
@@ -232,42 +232,55 @@ body {
   text-align: center;
   padding: 20px;
 }
-/* ===== INSTITUTION LOGO STYLES ===== */
-/* Academic institution logos */
+
 .university-logo {
-  max-height: 81px;
   width: auto;
+  height: 90px; /* Fixed base size */
   object-fit: contain;
   margin-bottom: 15px;
 }
 
-/* BlockEnergy corporate logo (30% size) */
 .blockenergy-logo {
-  max-height: 24.3px !important; /* 81px * 0.3 */
-  max-width: 30% !important;
-  height: auto;
   width: auto;
+  height: 27px; /* Exactly 30% of 90px */
   object-fit: contain;
   margin-bottom: 15px;
-  display: block; /* Ensures proper sizing */
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
+  .university-logo {
+    height: 70px; /* Reduced base size */
+  }
   .blockenergy-logo {
-    max-height: 18.9px !important; /* 63px * 0.3 */
-    max-width: 25% !important;
+    height: 21px; /* 30% of 70px */
   }
 }
 
-@media (-webkit-min-device-pixel-ratio: 2), 
-       (min-resolution: 192dpi) {
-  .blockenergy-logo {
-    max-height: 45px !important; /* 150px * 0.3 */
-    max-width: 30% !important;
-  }
+/* Navigation buttons */
+.nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: #1E90FF;
+  color: white;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  margin-top: 10px;
 }
 
+/* Specific back-to-top button */
+.nav-btn.back-to-top {
+  width: 24px; /* 60% of 40px */
+  height: 24px; /* 60% of 40px */
+  font-size: 12px; /* 67% reduction */
+  background-color: #0066CC;
+}
 /* Team grid styles */
 .team-grid {
   display: grid;
@@ -361,4 +374,32 @@ body {
   #researchContactForm textarea {
     padding: 12px;
   }
+}
+
+/* Add to main.css */
+#verification-section {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 20px;
+  border-left: 4px solid #1E90FF;
+}
+
+#verification-section h4 {
+  margin-top: 0;
+  color: #1E90FF;
+}
+
+#verification-code {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: 200px;
+  margin-right: 10px;
+  font-size: 1rem;
+}
+
+#verification-status {
+  margin-top: 15px;
+  font-weight: bold;
 }

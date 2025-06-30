@@ -1,0 +1,22 @@
+{
+  "contact_pageTitle": "Kontaktieren Sie das BlockEnergy Forschungsteam",
+  "contact_pageSubtitle": "Nehmen Sie Kontakt mit uns auf, um Forschungspartnerschaften, technische Anfragen oder Kooperationsmöglichkeiten zu besprechen",
+  "contact_infoTitle": "Unsere Informationen",
+  "contact_email": "E-Mail",
+  "contact_portal": "Forschungsportal",
+  "contact_github": "GitHub",
+  "contact_location": "Standort",
+  "contact_securityNote": "Alle Kommunikationen werden mit Ende-zu-Ende-Verschlüsselung gesichert und streng vertraulich behandelt.",
+  "contact_partnerTitle": "Werden Sie ein Forschungspartner",
+  "contact_partnerSubtitle": "Füllen Sie das untenstehende Formular aus und wir werden uns innerhalb von 24 Stunden bei Ihnen melden",
+  "contact_institution": "Institutionsname",
+  "contact_emailPlaceholder": "Geben Sie Ihre E-Mail-Adresse ein",
+  "contact_interests": "Forschungsinteressen",
+  "contact_submit": "Anfrage senden",
+  "contact_verifyTitle": "Bestätigen Sie Ihre E-Mail",
+  "contact_verifySubtitle": "Wir haben einen 6-stelligen Bestätigungscode an Ihre E-Mail-Adresse gesendet.",
+  "contact_verifyBtn": "Code bestätigen",
+  "contact_resend": "Bestätigungscode erneut senden",
+  "contact_timerText": "Code läuft ab in:",
+  "contact_footerText": "BlockEnergy ACR © ist eine Forschungsinitiative des CRIL, Irland, und der Zhengzhou University Oncology."
+}

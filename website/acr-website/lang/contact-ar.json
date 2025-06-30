@@ -1,0 +1,22 @@
+{
+  "contact_pageTitle": "اتصل بفريق أبحاث بلوك إنيرجي",
+  "contact_pageSubtitle": "اتصل بنا لمناقشة الشراكات البحثية والاستفسارات الفنية أو فرص التعاون",
+  "contact_infoTitle": "معلوماتنا",
+  "contact_email": "البريد الإلكتروني",
+  "contact_portal": "البوابة البحثية",
+  "contact_github": "GitHub",
+  "contact_location": "الموقع",
+  "contact_securityNote": "جميع الاتصالات مؤمنة بتشفير من طرف إلى طرف وتتم معالجتها بسرية صارمة.",
+  "contact_partnerTitle": "كن شريكًا بحثيًا",
+  "contact_partnerSubtitle": "املأ النموذج أدناه وسنتواصل معك في غضون 24 ساعة",
+  "contact_institution": "اسم المؤسسة",
+  "contact_emailPlaceholder": "أدخل عنوان بريدك الإلكتروني",
+  "contact_interests": "الاهتمامات البحثية",
+  "contact_submit": "إرسال الاستفسار",
+  "contact_verifyTitle": "تحقق من بريدك الإلكتروني",
+  "contact_verifySubtitle": "لقد أرسلنا رمز تحقق مكون من 6 أرقام إلى عنوان بريدك الإلكتروني.",
+  "contact_verifyBtn": "تحقق من الرمز",
+  "contact_resend": "إعادة إرسال رمز التحقق",
+  "contact_timerText": "ينتهي الرمز في:",
+  "contact_footerText": "بلوك إنيرجي ACR © هي مبادرة بحثية من CRIL، أيرلندا وجامعة تشنغتشو للأورام."
+}

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Contact BlockEnergy Research Team | Accessible Website</title>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
+  <link rel="stylesheet" href="styles/acr.css" />
+</head>
+<body>
+  <!-- Skip navigation for keyboard users -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Header with Logo and Language Switcher -->
+  <header class="header" role="banner">
+    <div class="header-top">
+      <div
+        class="logo-container"
+        onclick="window.location.href='index.html'"
+        tabindex="0"
+        role="button"
+        aria-label="BlockEnergy ACR Home"
+      >
+        <img src="images/blockenergy-logo.jpg" alt="BlockEnergy Logo" />
+        <div class="brand-name">BlockEnergy ACR</div>
+      </div>
+
+      <div class="header-right">
+        <div id="session-timer" class="normal">
+          <span style="margin-right: 5px;">⏱️</span>
+          <span id="timer-text"></span>
+        </div>
+        <a href="index.html" class="home-btn" aria-label="Return to home page">
+          <i class="fas fa-home" aria-hidden="true"></i>
+          <span data-translate="navHome">Home</span>
+        </a>
+
+        <div class="language-switcher">
+          <i class="fas fa-globe" aria-hidden="true"></i>
+          <select id="languageSelect" aria-label="Select website language">
+            <option value="en">English (UK)</option>
+            <option value="zh">中文</option>
+            <option value="fr">Français</option>
+            <option value="de">Deutsch</option>
+            <option value="ja">日本語</option>
+            <option value="ko">한국어</option>
+            <option value="ru">Русский</option>
+            <option value="ar">العربية</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main id="main-content" class="container" role="main">
+    <div class="page-header">
+      <h1 data-translate="contact_pageTitle">Contact Our Research Team</h1>
+      <p data-translate="contact_pageSubtitle">
+        Get in touch with us to discuss research partnerships, technical inquiries, or collaboration opportunities
+      </p>
+    </div>
+
+    <div class="contact-container">
+      <!-- Contact Information -->
+      <section class="contact-info" aria-labelledby="contact-info-title">
+        <h2 id="contact-info-title" data-translate="contact_infoTitle">
+          <i class="fas fa-info-circle" aria-hidden="true"></i> Our Information
+        </h2>
+
+        <div class="contact-methods">
+          <div class="contact-item">
+            <div class="contact-icon" aria-hidden="true">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div class="contact-details">
+              <h3 data-translate="contact_email">Email</h3>
+              <p>
+                <a href="mailto:acr@blockenergy.eu" aria-label="Send email to acr@blockenergy.eu">
+                  acr@blockenergy.eu
+                </a>
+              </p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon" aria-hidden="true">
+              <i class="fas fa-globe"></i>
+            </div>
+            <div class="contact-details">
+              <h3 data-translate="contact_portal">Research Portal</h3>
+              <p>
+                <a href="https://acr.blockenergy.eu" target="_blank" aria-label="Visit our research portal">
+                  acr.blockenergy.eu
+                </a>
+              </p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon" aria-hidden="true">
+              <i class="fab fa-github"></i>
+            </div>
+            <div class="contact-details">
+              <h3 data-translate="contact_github">GitHub</h3>
+              <p>
+                <a href="https://github.com/blockenergy/acr" target="_blank" aria-label="Visit our GitHub repository">
+                  github.com/blockenergy/acr
+                </a>
+              </p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon" aria-hidden="true">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="contact-details">
+              <h3 data-translate="contact_location">Location</h3>
+              <p>CRIL, Ireland<br />Zhengzhou University</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="security-info">
+          <p>
+            <i class="fas fa-lock" aria-hidden="true"></i>
+            <span data-translate="contact_securityNote">
+              All communications are secured with end-to-end encryption and treated with strict confidentiality.
+            </span>
+          </p>
+        </div>
+      </section>
+
+      <!-- Contact Form -->
+      <section class="contact-form-section" aria-labelledby="contact-form-title">
+        <h2 id="contact-form-title" data-translate="contact_partnerTitle">
+          <i class="fas fa-paper-plane" aria-hidden="true"></i> Become a Research Partner
+        </h2>
+        <p data-translate="contact_partnerSubtitle">
+          Fill out the form below and we'll contact you within 24 hours
+        </p>
+
+        <form id="researchContactForm" aria-describedby="form-instructions">
+          <p id="form-instructions" class="sr-only">
+            Fill out all required fields to submit your research inquiry
+          </p>
+
+          <div class="form-group">
+            <label for="institution" data-translate="contact_institution">Institution Name</label>
+            <input
+              type="text"
+              id="institution"
+              name="institution"
+              placeholder="Enter your institution name"
+              required
+              aria-required="true"
+              data-translate-placeholder="contact_institution"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="email" data-translate="contact_email">Contact Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Enter your email address"
+              required
+              aria-required="true"
+              data-translate-placeholder="contact_emailPlaceholder"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="interests" data-translate="contact_interests">Research Interests</label>
+            <textarea
+              id="interests"
+              name="interests"
+              placeholder="Describe your research interests and how you'd like to collaborate"
+              required
+              aria-required="true"
+              data-translate-placeholder="contact_interests"
+            ></textarea>
+          </div>
+
+          <button type="submit" class="btn" id="submitBtn" aria-label="Submit research inquiry">
+            <i class="fas fa-paper-plane" aria-hidden="true"></i>
+            <span data-translate="contact_submit">Submit Inquiry</span>
+          </button>
+        </form>
+
+        <!-- OTP Verification Section -->
+        <div
+          class="verification-section"
+          id="verificationSection"
+          aria-live="polite"
+          aria-atomic="true"
+          style="display: none;"
+        >
+          <h2 data-translate="contact_verifyTitle">
+            <i class="fas fa-shield-alt" aria-hidden="true"></i> Verify Your Email
+          </h2>
+          <p data-translate="contact_verifySubtitle">
+            We've sent a 6-digit verification code to your email address.
+          </p>
+
+          <div class="otp-container">
+            <input
+              type="text"
+              class="otp-input"
+              maxlength="1"
+              data-index="0"
+              aria-label="First digit"
+            />
+            <input
+              type="text"
+              class="otp-input"
+              maxlength="1"
+              data-index="1"
+              aria-label="Second digit"
+            />
+            <input
+              type="text"
+              class="otp-input"
+              maxlength="1"
+              data-index="2"
+              aria-label="Third digit"
+            />
+            <input
+              type="text"
+              class="otp-input"
+              maxlength="1"
+              data-index="3"
+              aria-label="Fourth digit"
+            />
+            <input
+              type="text"
+              class="otp-input"
+              maxlength="1"
+              data-index="4"
+              aria-label="Fifth digit"
+            />
+            <input
+              type="text"
+              class="otp-input"
+              maxlength="1"
+              data-index="5"
+              aria-label="Sixth digit"
+            />
+          </div>
+
+          <div class="timer" id="timer">
+            <span data-translate="contact_timerText">Code expires in:</span>
+            <span id="countdown">03:00</span>
+          </div>
+
+          <button class="btn" id="verifyBtn" aria-label="Verify code">
+            <i class="fas fa-check-circle" aria-hidden="true"></i>
+            <span data-translate="contact_verifyBtn">Verify Code</span>
+          </button>
+
+          <div
+            class="resend-link"
+            id="resendLink"
+            role="button"
+            tabindex="0"
+            aria-label="Resend verification code"
+            style="display: none;"
+          >
+            <i class="fas fa-redo" aria-hidden="true"></i>
+            <span data-translate="contact_resend">Resend Verification Code</span>
+          </div>
+        </div>
+
+        <div class="status-message" id="statusMessage" role="alert" aria-live="assertive"></div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer-content">
+      <div class="footer-logo">BlockEnergy</div>
+      <div class="footer-text">
+        <p data-translate="contact_footerText">
+          BlockEnergy ACR © is a research initiative of CRIL & UCD, Ireland, and Zhengzhou University, PR China.
+        </p>
+      </div>
+      <div class="compliance-badges">
+        <img src="images/gdpr-badge.png" alt="GDPR Compliant" />
+        <img src="images/hipaa-badge.png" alt="HIPAA Compliant" />
+        <img src="images/research-ethics.png" alt="Research Ethics Approved" />
+        <img src="images/eaa.png" alt="WCAG 2.1 AA Compliant" />
+      </div>
+      <div class="legal">
+        <a href="#" tabindex="0">Privacy Policy</a>
+        <a href="#" tabindex="0">Terms of Service</a>
+        <a href="#" tabindex="0">Research Ethics Compliance</a>
+        <a href="#" tabindex="0">Accessibility Statement</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Accessibility Controls -->
+  <div class="accessibility-controls">
+    <button class="accessibility-btn" id="contrastToggle" aria-label="Toggle high contrast mode">
+      <i class="fas fa-adjust"></i>
+    </button>
+    <button class="accessibility-btn" id="textSizeToggle" aria-label="Toggle large text size">
+      <i class="fas fa-text-height"></i>
+    </button>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="scripts/timer.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    // Replace with your actual User a/c API public key from EmailJS
+    emailjs.init('GorW85eorJ3bOA95E');
+  </script>
+  <script src="scripts/contact.js"></script>
+</body>
+</html>

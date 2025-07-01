@@ -316,12 +316,24 @@
   </div>
 
   <!-- JavaScript -->
-  <script src="scripts/timer.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-  <script>
-    // Replace with your actual User a/c API public key from EmailJS
-    emailjs.init('GorW85eorJ3bOA95E');
-  </script>
-  <script src="scripts/contact.js"></script>
+
+    <!-- Accessibility engine (eaa.js) -->
+    <script src="scripts/eaa.js"></script>
+
+    <!-- Language switcher must load before any translations happen -->
+    <script src="scripts/language-switcher.js"></script>
+  
+    <!-- Session‐timeout timer -->
+    <script src="scripts/timer.js"></script>
+  
+    <!-- EmailJS library + init -->
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script>
+      emailjs.init('GorW85eorJ3bOA95E');  <!-- your real Public Key here -->
+    </script>
+  
+    <!-- Contact form handling -->
+    <script src="scripts/contact.js"></script>
+  
 </body>
 </html>

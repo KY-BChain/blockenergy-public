@@ -73,6 +73,39 @@
             -webkit-text-fill-color: transparent;
         }
         
+        /* Language Switcher Styles */
+        .language-switcher {
+            position: relative;
+            margin-left: auto;
+            margin-right: 2rem;
+        }
+        
+        .language-switcher select {
+            background: rgba(30, 41, 59, 0.7);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            appearance: none;
+            cursor: pointer;
+        }
+        
+        .language-switcher::after {
+            content: "▼";
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            pointer-events: none;
+            font-size: 0.8rem;
+        }
+        
+        /* RTL support for Arabic */
+        html[lang="ar"] {
+            direction: rtl;
+        }
+        
         /* Main Content */
         main {
             flex: 1;
@@ -254,6 +287,10 @@
             .platform-card {
                 padding: 2rem;
             }
+            
+            .language-switcher {
+                margin-right: 1rem;
+            }
         }
         /* For mobile responsiveness */
         @media (max-width: 768px) {
@@ -274,11 +311,25 @@
             </div>
             <div class="logo-text">BlockEnergy</div>
         </div>
+        
+        <!-- Language Switcher -->
+        <div class="language-switcher">
+            <select id="language-select">
+                <option value="en">English</option>
+                <option value="de">Deutsch</option>
+                <option value="fr">Français</option>
+                <option value="ja">日本語</option>
+                <option value="ko">한국어</option>
+                <option value="ru">Русский</option>
+                <option value="ar">العربية</option>
+                <option value="zh">中文</option>
+            </select>
+        </div>
     </header>    
     <main>
         <div class="hero">
-            <h1>Powering the Future with Decentralised Solutions</h1>
-            <p>BlockEnergy develops cutting-edge Web3 platforms that transform industries through blockchain technology, AI innovation, and decentralised architectures.</p>
+            <h1 data-i18n="home.title">Powering the Future with Decentralised Solutions</h1>
+            <p data-i18n="home.subtitle">BlockEnergy develops cutting-edge Web3 platforms that transform industries through blockchain technology, AI innovation, and decentralised architectures.</p>
         </div>
         
         <div class="platforms">
@@ -290,9 +341,9 @@
                         <path d="M16 10a4 4 0 0 1-8 0"></path>
                     </svg>
                 </div>
-                <h2>DeFi Platform</h2>
-                <p>Revolutionising energy and commodity trading through decentralised trade-finance. Our platform enables transparent, efficient tokenisation of real-world assets (RWA) for global energy markets.</p>
-                <a href="./defi-website/" class="btn defi-btn">Enter DeFi Platform</a>
+                <h2 data-i18n="home.defi_title">DeFi Platform</h2>
+                <p data-i18n="home.defi_description">Revolutionising energy and commodity trading through decentralised trade-finance. Our platform enables transparent, efficient tokenisation of real-world assets (RWA) for global energy markets.</p>
+                <a href="./defi-website/" class="btn defi-btn" data-i18n="home.defi_button">Enter DeFi Platform</a>
             </div>
             
             <div class="platform-card acr-card">
@@ -302,19 +353,93 @@
                         <path d="M3.34 19a10 10 0 1 1 17.32 0"></path>
                     </svg>
                 </div>
-                <h2>ACR HealthCare</h2>
-                <p>Transforming cancer research through AI-powered diagnostics. Our ACR platform uses advanced radiomics and federated learning for early detection of gynecological cancers while preserving patient privacy.</p>
-                <a href="./acr-website/" class="btn acr-btn">Enter ACR Platform</a>
+                <h2 data-i18n="home.acr_title">ACR HealthCare</h2>
+                <p data-i18n="home.acr_description">Transforming cancer research through AI-powered diagnostics. Our ACR platform uses advanced radiomics and federated learning for early detection of gynecological cancers while preserving patient privacy.</p>
+                <a href="./acr-website/" class="btn acr-btn" data-i18n="home.acr_button">Enter ACR Platform</a>
             </div>
         </div>
     </main>
     
     <footer>
         <div class="footer-content">
-            <div class="footer-logo">BlockEnergy</div>
-            <p class="footer-text">Decentralised solutions for real-world challenges</p>
-            <p class="legal">BlockEnergy © is a registered business name of CRIL, Ireland, and SKL, HKSAR.</p>
+            <div class="footer-logo" data-i18n="footer.logo">BlockEnergy</div>
+            <p class="footer-text" data-i18n="footer.tagline">Decentralised solutions for real-world challenges</p>
+            <p class="legal" data-i18n="footer.copyright">BlockEnergy © is a registered business name of CRIL, Ireland, and SKL, HKSAR.</p>
         </div>
     </footer>
+
+    <!-- Language Switcher Script -->
+    <script type="module">
+        // Language configuration
+        const languages = {
+            en: 'English',
+            de: 'Deutsch',
+            fr: 'Français',
+            ja: '日本語',
+            ko: '한국어',
+            ru: 'Русский',
+            ar: 'العربية',
+            zh: '中文'
+        };
+        
+        // DOM Elements
+        const languageSelect = document.getElementById('language-select');
+        
+        // Initialize language switcher
+        function initLanguageSwitcher() {
+            // Get saved language or browser language
+            const savedLang = localStorage.getItem('selectedLanguage');
+            const browserLang = navigator.language.slice(0, 2);
+            const currentLanguage = savedLang || (languages[browserLang] ? browserLang : 'en');
+            
+            // Set dropdown value
+            languageSelect.value = currentLanguage;
+            
+            // Load translations
+            loadTranslations(currentLanguage);
+            
+            // Event listener for language change
+            languageSelect.addEventListener('change', (e) => {
+                const newLang = e.target.value;
+                localStorage.setItem('selectedLanguage', newLang);
+                loadTranslations(newLang);
+            });
+        }
+        
+        // Load translations for selected language
+        async function loadTranslations(lang) {
+            try {
+                // Load translation file
+                const response = await fetch(`home-lang/home-${lang}.json`);
+                const translations = await response.json();
+                
+                // Update DOM elements
+                document.querySelectorAll('[data-i18n]').forEach(element => {
+                    const keys = element.getAttribute('data-i18n').split('.');
+                    let translation = translations;
+                    
+                    // Navigate through nested JSON structure
+                    for (const key of keys) {
+                        translation = translation[key];
+                        if (!translation) break;
+                    }
+                    
+                    // Update element content if translation exists
+                    if (translation) {
+                        element.textContent = translation;
+                    }
+                });
+                
+                // Update HTML lang attribute
+                document.documentElement.lang = lang;
+                
+            } catch (error) {
+                console.error('Error loading translations:', error);
+            }
+        }
+        
+        // Initialize on DOM load
+        document.addEventListener('DOMContentLoaded', initLanguageSwitcher);
+    </script>
 </body>
 </html>

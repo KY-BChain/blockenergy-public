@@ -1,0 +1,17 @@
+{
+    "home": {
+        "title": "분산형 솔루션으로 미래에 동력을 공급하다",
+        "subtitle": "BlockEnergy는 블록체인 기술, AI 혁신 및 분산형 아키텍처를 통해 산업을 변화시키는 최첨단 Web3 플랫폼을 개발합니다.",
+        "defi_title": "DeFi 플랫폼",
+        "defi_description": "분산형 무역 금융을 통한 에너지 및 상품 거래 혁신. 당사 플랫폼은 글로벌 에너지 시장을 위한 실물 자산(RWA)의 투명하고 효율적인 토큰화를 가능하게 합니다.",
+        "defi_button": "DeFi 플랫폼 입장",
+        "acr_title": "ACR 헬스케어",
+        "acr_description": "AI 기반 진단을 통한 암 연구 변혁. 당사 ACR 플랫폼은 환자 프라이버시를 보호하면서 부인과 암의 조기 발견을 위해 고급 라디오믹스와 연합 학습을 사용합니다.",
+        "acr_button": "ACR 플랫폼 입장"
+    },
+    "footer": {
+        "logo": "BlockEnergy",
+        "tagline": "실제 문제에 대한 분산형 솔루션",
+        "copyright": "BlockEnergy ©는 아일랜드 CRIL 및 홍콩 SKL의 등록 상호입니다."
+    }
+}

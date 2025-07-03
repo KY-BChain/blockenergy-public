@@ -1,0 +1,17 @@
+{
+    "home": {
+        "title": "以去中心化解决方案驱动未来",
+        "subtitle": "BlockEnergy 开发尖端的 Web3 平台，通过区块链技术、AI 创新和去中心化架构改变行业。",
+        "defi_title": "DeFi 平台",
+        "defi_description": "通过去中心化贸易金融彻底改变能源和大宗商品交易。我们的平台为全球能源市场提供透明、高效的实物资产（RWA）代币化解决方案。",
+        "defi_button": "进入 DeFi 平台",
+        "acr_title": "ACR 医疗",
+        "defi_description": "通过 AI 驱动的诊断改变癌症研究。我们的 ACR 平台使用先进的放射组学和联邦学习技术，在保护患者隐私的同时实现妇科癌症的早期检测。",
+        "acr_button": "进入 ACR 平台"
+    },
+    "footer": {
+        "logo": "BlockEnergy",
+        "tagline": "解决现实挑战的去中心化方案",
+        "copyright": "BlockEnergy © 是爱尔兰 CRIL 和香港 SKL 的注册商标。"
+    }
+}

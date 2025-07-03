@@ -1,0 +1,17 @@
+{
+    "home": {
+        "title": "Alimenter l'avenir avec des solutions décentralisées",
+        "subtitle": "BlockEnergy développe des plateformes Web3 de pointe qui transforment les industries grâce à la technologie blockchain, à l'innovation en IA et aux architectures décentralisées.",
+        "defi_title": "Plateforme DeFi",
+        "defi_description": "Révolutionner le commerce de l'énergie et des matières premières grâce à la finance commerciale décentralisée. Notre plateforme permet la tokenisation transparente et efficace des actifs réels (RWA) pour les marchés énergétiques mondiaux.",
+        "defi_button": "Accéder à la plateforme DeFi",
+        "acr_title": "Soins de santé ACR",
+        "acr_description": "Transformer la recherche sur le cancer grâce à des diagnostics alimentés par l'IA. Notre plateforme ACR utilise la radiomique avancée et l'apprentissage fédéré pour la détection précoce des cancers gynécologiques tout en préservant la confidentialité des patients.",
+        "acr_button": "Accéder à la plateforme ACR"
+    },
+    "footer": {
+        "logo": "BlockEnergy",
+        "tagline": "Solutions décentralisées pour des défis réels",
+        "copyright": "BlockEnergy © est une marque commerciale déposée de CRIL, Irlande, et SKL, HKSAR."
+    }
+}

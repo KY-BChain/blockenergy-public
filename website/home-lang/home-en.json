@@ -1,0 +1,17 @@
+{
+    "home": {
+        "title": "Powering the Future with Decentralised Solutions",
+        "subtitle": "BlockEnergy develops cutting-edge Web3 platforms that transform industries through blockchain technology, AI innovation, and decentralised architectures.",
+        "defi_title": "DeFi Platform",
+        "defi_description": "Revolutionising energy and commodity trading through decentralised trade-finance. Our platform enables transparent, efficient tokenisation of real-world assets (RWA) for global energy markets.",
+        "defi_button": "Enter DeFi Platform",
+        "acr_title": "ACR HealthCare",
+        "acr_description": "Transforming cancer research through AI-powered diagnostics. Our ACR platform uses advanced radiomics and federated learning for early detection of gynecological cancers while preserving patient privacy.",
+        "acr_button": "Enter ACR Platform"
+    },
+    "footer": {
+        "logo": "BlockEnergy",
+        "tagline": "Decentralised solutions for real-world challenges",
+        "copyright": "BlockEnergy © is a registered business name of CRIL, Ireland, and SKL, HKSAR."
+    }
+}

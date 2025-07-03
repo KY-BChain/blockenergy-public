@@ -1,0 +1,17 @@
+{
+    "home": {
+        "title": "Die Zukunft mit dezentralen Lösungen antreiben",
+        "subtitle": "BlockEnergy entwickelt wegweisende Web3-Plattformen, die Branchen durch Blockchain-Technologie, KI-Innovation und dezentrale Architekturen transformieren.",
+        "defi_title": "DeFi-Plattform",
+        "defi_description": "Revolutionierung des Energie- und Rohstoffhandels durch dezentrale Handelsfinanzierung. Unsere Plattform ermöglicht die transparente und effiziente Tokenisierung realer Vermögenswerte (RWA) für globale Energiemärkte.",
+        "defi_button": "Zur DeFi-Plattform",
+        "acr_title": "ACR Gesundheitswesen",
+        "acr_description": "Transformation der Krebsforschung durch KI-gestützte Diagnostik. Unsere ACR-Plattform nutzt fortschrittliche Radiomik und föderiertes Lernen zur Früherkennung gynäkologischer Krebserkrankungen unter Wahrung der Patientendatenschutz.",
+        "acr_button": "Zur ACR-Plattform"
+    },
+    "footer": {
+        "logo": "BlockEnergy",
+        "tagline": "Dezentrale Lösungen für reale Herausforderungen",
+        "copyright": "BlockEnergy © ist ein eingetragener Handelsname von CRIL, Irland, und SKL, HKSAR."
+    }
+}

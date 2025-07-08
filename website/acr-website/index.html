@@ -335,6 +335,27 @@
             <i class="fas fa-text-height"></i>
         </button>
     </div>
+    <!-- DeepSeek ChatBot -->
+    <div class="chatbot-container">
+        <button id="deepseek-chat-button" class="chatbot-button" aria-label="DeepSeek AI Chat">
+            <i class="fas fa-robot"></i>
+        </button>
+        
+        <div id="deepseek-chat-modal" class="chat-modal">
+            <div class="chat-header">
+                <h3>DeepSeek AI Research Assistant</h3>
+                <button id="close-chat" class="close-button">&times;</button>
+            </div>
+            <div id="chat-messages" class="chat-messages">
+                <div class="message ai">Hello! I'm DeepSeek AI, your cancer research assistant. How can I help you with ACR today?</div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="user-input" placeholder="Ask about cancer research..." 
+                       aria-label="Type your question about cancer research" />
+                <button id="send-button">Send</button>
+            </div>
+        </div>
+    </div>
     
     <script>
         // Navigation functions
@@ -356,11 +377,13 @@
         function connectWallet() {
             alert('Wallet connection functionality would be implemented here');
         }
+
     </script>
     
     <!-- JavaScript Files -->
     <script src="scripts/language-switcher.js"></script>
     <script src="scripts/eaa.js"></script>
     <script src="scripts/timer.js"></script>
+    <script src="scripts/DeepSeek-chat.js"></script>
 </body>
 </html>

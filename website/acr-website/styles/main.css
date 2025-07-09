@@ -518,7 +518,7 @@ body.high-contrast .contact-info,
 body.high-contrast .contact-form-section {
     background: #222 !important;
     border: 2px solid yellow !important;
-    color: white !important;
+    color: rgb(244, 4, 4) !important;
 }
 
 /* Larger Text Mode */

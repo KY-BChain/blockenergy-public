@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACR - AI Cancer Research Ontology Interface</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .panel:hover {
+            transform: translateY(-5px);
+        }
+
+        .panel h2 {
+            color: #2d3748;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .results-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+
+        .ontology-tree {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .tree-node {
+            margin-left: 20px;
+            padding: 5px 0;
+            border-left: 2px solid #e2e8f0;
+            padding-left: 15px;
+        }
+
+        .tree-node.expandable {
+            cursor: pointer;
+            position: relative;
+        }
+
+        .tree-node.expandable:before {
+            content: '▶';
+            position: absolute;
+            left: -10px;
+            color: #667eea;
+        }
+
+        .tree-node.expanded:before {
+            content: '▼';
+        }
+
+        .privacy-notice {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 30px;
+            border-left: 5px solid #38a169;
+        }
+
+        .privacy-notice h3 {
+            color: #38a169;
+            margin-bottom: 10px;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .status-connected {
+            background: #38a169;
+            box-shadow: 0 0 10px rgba(56, 161, 105, 0.5);
+        }
+
+        .status-disconnected {
+            background: #e53e3e;
+            box-shadow: 0 0 10px rgba(229, 62, 62, 0.5);
+        }
+
+        .blockchain-status {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 15px;
+            margin-top: 20px;
+            border-left: 4px solid #764ba2;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .sparql-query {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin: 10px 0;
+        }
+
+        .rule-display {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>ACR - AI Cancer Research</h1>
+            <p>Federated Learning Platform for Early Detection of Breast and Cervical Cancer</p>
+            <p>Secure Ontology Interface for Medical Research Institutions</p>
+        </div>
+
+        <div class="main-content">
+            <div class="panel">
+                <h2>Patient Data Input</h2>
+                <form id="patientForm">
+                    <div class="form-group">
+                        <label for="patientId">Patient ID (Anonymized)</label>
+                        <input type="text" id="patientId" placeholder="ACR-2024-001" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="imagingType">Imaging Type</label>
+                        <select id="imagingType" required>
+                            <option value="">Select Imaging Type</option>
+                            <option value="MRI">MRI</option>
+                            <option value="CT">CT Scan</option>
+                            <option value="Ultrasound">Ultrasound</option>
+                            <option value="Mammography">Mammography</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cancerType">Cancer Type</label>
+                        <select id="cancerType" required>
+                            <option value="">Select Cancer Type</option>
+                            <option value="Breast">Breast Cancer</option>
+                            <option value="Cervical">Cervical Cancer</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="radiomicsFeatures">Radiomics Features (JSON)</label>
+                        <textarea id="radiomicsFeatures" rows="4" placeholder='{"texture": 0.75, "shape": 0.82, "intensity": 0.68}'></textarea>
+                    </div>
+
+                    <button type="submit" class="btn">Submit to Ontology</button>
+                </form>
+            </div>
+
+            <div class="panel">
+                <h2>Ontology Query Interface</h2>
+                <div class="form-group">
+                    <label for="sparqlQuery">SPARQL Query</label>
+                    <textarea id="sparqlQuery" rows="6" placeholder="PREFIX acr: <https://medical-ai.org/ontologies/ACR#>
+SELECT ?patient ?riskLevel ?confidence
+WHERE {
+  ?patient acr:hasImagingStudy ?study .
+  ?study acr:hasRadiomicsFeature ?feature .
+  ?feature acr:hasRiskLevel ?riskLevel .
+  ?feature acr:hasConfidence ?confidence .
+}"></textarea>
+                </div>
+
+                <button onclick="executeQuery()" class="btn">Execute Query</button>
+
+                <div class="blockchain-status">
+                    <span class="status-indicator status-connected"></span>
+                    <strong>Blockchain Status:</strong> Connected to Hardhat Network
+                    <br>
+                    <span class="status-indicator status-connected"></span>
+                    <strong>Ontology Status:</strong> ACR Ontology Loaded
+                </div>
+            </div>
+        </div>
+
+        <div class="results-panel">
+            <h2>Ontology Structure & SWRL Rules</h2>
+            <div id="ontologyDisplay">
+                <div class="ontology-tree">
+                    <div class="tree-node expandable" onclick="toggleNode(this)">
+                        <strong>acr:CancerResearchOntology</strong>
+                        <div class="tree-node" style="display: none;">
+                            <div class="tree-node expandable" onclick="toggleNode(this)">
+                                <strong>acr:Patient</strong>
+                                <div class="tree-node" style="display: none;">
+                                    acr:hasAge → xsd:integer<br>
+                                    acr:hasGender → acr:Gender<br>
+                                    acr:hasImagingStudy → acr:ImagingStudy
+                                </div>
+                            </div>
+                            <div class="tree-node expandable" onclick="toggleNode(this)">
+                                <strong>acr:ImagingStudy</strong>
+                                <div class="tree-node" style="display: none;">
+                                    acr:hasModality → acr:ImagingModality<br>
+                                    acr:hasRadiomicsFeature → acr:RadiomicsFeature<br>
+                                    acr:hasDate → xsd:dateTime
+                                </div>
+                            </div>
+                            <div class="tree-node expandable" onclick="toggleNode(this)">
+                                <strong>acr:RadiomicsFeature</strong>
+                                <div class="tree-node" style="display: none;">
+                                    acr:hasTextureValue → xsd:double<br>
+                                    acr:hasShapeValue → xsd:double<br>
+                                    acr:hasIntensityValue → xsd:double<br>
+                                    acr:hasRiskLevel → acr:RiskLevel
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 20px; color: #2d3748;">Active SWRL Rules</h3>
+                <div class="rule-display">
+                    <strong>Rule 1: High Risk Detection</strong><br>
+                    <code>Patient(?p) ∧ hasImagingStudy(?p, ?study) ∧ hasRadiomicsFeature(?study, ?feature) ∧ hasTextureValue(?feature, ?texture) ∧ hasShapeValue(?feature, ?shape) ∧ swrlb:greaterThan(?texture, 0.8) ∧ swrlb:greaterThan(?shape, 0.75) → hasRiskLevel(?feature, HighRisk)</code>
+                </div>
+
+                <div class="rule-display">
+                    <strong>Rule 2: Early Warning System</strong><br>
+                    <code>Patient(?p) ∧ hasAge(?p, ?age) ∧ hasImagingStudy(?p, ?study) ∧ hasRadiomicsFeature(?study, ?feature) ∧ hasRiskLevel(?feature, HighRisk) ∧ swrlb:greaterThan(?age, 40) → requiresUrgentReview(?p, true)</code>
+                </div>
+
+                <div class="rule-display">
+                    <strong>Rule 3: Federated Learning Eligibility</strong><br>
+                    <code>Patient(?p) ∧ hasImagingStudy(?p, ?study) ∧ hasDataQuality(?study, ?quality) ∧ hasPrivacyConsent(?p, true) ∧ swrlb:greaterThan(?quality, 0.9) → eligibleForFederatedLearning(?p, true)</code>
+                </div>
+            </div>
+        </div>
+
+        <div class="privacy-notice">
+            <h3>🔒 Privacy & Compliance</h3>
+            <p>This interface operates under strict GDPR compliance. All patient data is anonymized and encrypted before processing. The ontology ensures semantic interoperability while maintaining data sovereignty across participating institutions.</p>
+        </div>
+    </div>
+
+    <script>
+        // Global state for ontology and blockchain integration
+        let acrOntology = null;
+        let web3Provider = null;
+        let federatedLearningContract = null;
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeOntologyInterface();
+            connectToBlockchain();
+        });
+
+        function initializeOntologyInterface() {
+            console.log('Initializing ACR Ontology Interface...');
+            
+            // Simulate loading the ontology from your Protégé export
+            // In production, this would connect to your OWL/RDF endpoint
+            acrOntology = {
+                namespace: 'https://medical-ai.org/ontologies/ACR#',
+                classes: ['Patient', 'ImagingStudy', 'RadiomicsFeature', 'CancerType'],
+                properties: ['hasAge', 'hasImagingStudy', 'hasRadiomicsFeature', 'hasRiskLevel'],
+                individuals: [],
+                rules: []
+            };
+
+            updateStatus('Ontology loaded successfully');
+        }
+
+        async function connectToBlockchain() {
+            try {
+                // In production, this would connect to your Hardhat network
+                if (typeof window.ethereum !== 'undefined') {
+                    web3Provider = new ethers.providers.Web3Provider(window.ethereum);
+                    await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    
+                    // Connect to your federated learning smart contract
+                    // This would use your deployed contract address
+                    const contractAddress = "0x..."; // Your contract address
+                    const contractABI = []; // Your contract ABI
+                    
+                    federatedLearningContract = new ethers.Contract(
+                        contractAddress, 
+                        contractABI, 
+                        web3Provider.getSigner()
+                    );
+                    
+                    updateStatus('Connected to blockchain');
+                } else {
+                    updateStatus('MetaMask not detected - running in simulation mode');
+                }
+            } catch (error) {
+                console.error('Blockchain connection failed:', error);
+                updateStatus('Blockchain connection failed - running in simulation mode');
+            }
+        }
+
+        function updateStatus(message) {
+            console.log('Status:', message);
+            // Update UI status indicators
+        }
+
+        // Handle patient form submission
+        document.getElementById('patientForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                patientId: document.getElementById('patientId').value,
+                imagingType: document.getElementById('imagingType').value,
+                cancerType: document.getElementById('cancerType').value,
+                radiomicsFeatures: document.getElementById('radiomicsFeatures').value
+            };
+
+            try {
+                // Parse radiomics features
+                const features = JSON.parse(formData.radiomicsFeatures || '{}');
+                
+                // Create OWL individual for this patient
+                const patientData = await createPatientOntologyEntry(formData, features);
+                
+                // Execute SWRL rules for risk assessment
+                const riskAssessment = await executeRiskAssessmentRules(patientData);
+                
+                // Store metadata on blockchain (not patient data - only hashes and results)
+                await storeAssessmentOnBlockchain(riskAssessment);
+                
+                displayResults(patientData, riskAssessment);
+                
+            } catch (error) {
+                console.error('Error processing patient data:', error);
+                alert('Error processing patient data. Please check the radiomics features format.');
+            }
+        });
+
+        async function createPatientOntologyEntry(formData, features) {
+            // This would interact with your OWL ontology
+            // Converting form data to OWL/RDF triples
+            const patientData = {
+                id: formData.patientId,
+                type: 'acr:Patient',
+                properties: {
+                    'acr:hasImagingStudy': {
+                        type: 'acr:ImagingStudy',
+                        'acr:hasModality': formData.imagingType,
+                        'acr:hasRadiomicsFeature': {
+                            type: 'acr:RadiomicsFeature',
+                            'acr:hasTextureValue': features.texture || 0,
+                            'acr:hasShapeValue': features.shape || 0,
+                            'acr:hasIntensityValue': features.intensity || 0
+                        }
+                    },
+                    'acr:hasCancerType': formData.cancerType
+                }
+            };
+
+            return patientData;
+        }
+
+        async function executeRiskAssessmentRules(patientData) {
+            // Execute SWRL rules for risk assessment
+            const radiomics = patientData.properties['acr:hasImagingStudy']['acr:hasRadiomicsFeature'];
+            
+            let riskLevel = 'Low';
+            let confidence = 0.5;
+            let recommendations = [];
+
+            // Rule 1: High Risk Detection
+            if (radiomics['acr:hasTextureValue'] > 0.8 && radiomics['acr:hasShapeValue'] > 0.75) {
+                riskLevel = 'High';
+                confidence = 0.9;
+                recommendations.push('Urgent review recommended');
+                recommendations.push('Consider additional imaging');
+            }
+
+            // Rule 2: Medium Risk Detection
+            else if (radiomics['acr:hasTextureValue'] > 0.6 || radiomics['acr:hasShapeValue'] > 0.6) {
+                riskLevel = 'Medium';
+                confidence = 0.7;
+                recommendations.push('Follow-up in 3 months');
+                recommendations.push('Monitor progression');
+            }
+
+            return {
+                riskLevel,
+                confidence,
+                recommendations,
+                timestamp: new Date().toISOString()
+            };
+        }
+
+        async function storeAssessmentOnBlockchain(assessment) {
+            // Store only metadata and assessment results on blockchain
+            // Never store actual patient data - only hashes and outcomes
+            const assessmentHash = await hashAssessment(assessment);
+            
+            if (federatedLearningContract) {
+                try {
+                    const tx = await federatedLearningContract.storeAssessmentResult(
+                        assessmentHash,
+                        assessment.riskLevel,
+                        Math.floor(assessment.confidence * 100), // Convert to integer
+                        assessment.timestamp
+                    );
+                    
+                    console.log('Assessment stored on blockchain:', tx.hash);
+                } catch (error) {
+                    console.error('Blockchain storage failed:', error);
+                }
+            }
+        }
+
+        async function hashAssessment(assessment) {
+            // Create a hash of the assessment for blockchain storage
+            const encoder = new TextEncoder();
+            const data = encoder.encode(JSON.stringify(assessment));
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        function displayResults(patientData, riskAssessment) {
+            const resultsDiv = document.getElementById('ontologyDisplay');
+            const resultsHTML = `
+                <h3 style="color: #2d3748; margin-top: 20px;">Assessment Results</h3>
+                <div class="rule-display">
+                    <strong>Patient ID:</strong> ${patientData.id}<br>
+                    <strong>Risk Level:</strong> <span style="color: ${getRiskColor(riskAssessment.riskLevel)}">${riskAssessment.riskLevel}</span><br>
+                    <strong>Confidence:</strong> ${(riskAssessment.confidence * 100).toFixed(1)}%<br>
+                    <strong>Recommendations:</strong>
+                    <ul>
+                        ${riskAssessment.recommendations.map(rec => `<li>${rec}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+            
+            resultsDiv.innerHTML = resultsDiv.innerHTML + resultsHTML;
+        }
+
+        function getRiskColor(riskLevel) {
+            switch(riskLevel) {
+                case 'High': return '#e53e3e';
+                case 'Medium': return '#d69e2e';
+                case 'Low': return '#38a169';
+                default: return '#4a5568';
+            }
+        }
+
+        function executeQuery() {
+            const query = document.getElementById('sparqlQuery').value;
+            
+            // In production, this would execute against your SPARQL endpoint
+            // connected to your Protégé ontology
+            console.log('Executing SPARQL query:', query);
+            
+            // Simulate query results
+            const mockResults = [
+                { patient: 'ACR-2024-001', riskLevel: 'High', confidence: 0.89 },
+                { patient: 'ACR-2024-002', riskLevel: 'Medium', confidence: 0.72 },
+                { patient: 'ACR-2024-003', riskLevel: 'Low', confidence: 0.95 }
+            ];
+            
+            displayQueryResults(mockResults);
+        }
+
+        function displayQueryResults(results) {
+            const resultsHTML = `
+                <h3 style="color: #2d3748; margin-top: 20px;">Query Results</h3>
+                <div class="rule-display">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background: #f7fafc;">
+                                <th style="padding: 10px; border: 1px solid #e2e8f0;">Patient</th>
+                                <th style="padding: 10px; border: 1px solid #e2e8f0;">Risk Level</th>
+                                <th style="padding: 10px; border: 1px solid #e2e8f0;">Confidence</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${results.map(result => `
+                                <tr>
+                                    <td style="padding: 10px; border: 1px solid #e2e8f0;">${result.patient}</td>
+                                    <td style="padding: 10px; border: 1px solid #e2e8f0; color: ${getRiskColor(result.riskLevel)}">${result.riskLevel}</td>
+                                    <td style="padding: 10px; border: 1px solid #e2e8f0;">${(result.confidence * 100).toFixed(1)}%</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+            
+            document.getElementById('ontologyDisplay').innerHTML = 
+                document.getElementById('ontologyDisplay').innerHTML + resultsHTML;
+        }
+
+        function toggleNode(node) {
+            const children = node.children;
+            for (let i = 0; i < children.length; i++) {
+                const child = children[i];
+                if (child.classList.contains('tree-node')) {
+                    child.style.display = child.style.display === 'none' ? 'block' : 'none';
+                }
+            }
+            
+            node.classList.toggle('expanded');
+        }
+    </script>
+</body>
+</html>

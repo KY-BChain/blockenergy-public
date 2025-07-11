@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACR - Enhanced AI Cancer Research Interface</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .panel:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .panel h2 {
+            color: #2d3748;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .agent-status {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f8fafc;
+            border-radius: 10px;
+            border-left: 4px solid #38a169;
+        }
+
+        .agent-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+
+        .agent-info h4 {
+            margin: 0;
+            color: #2d3748;
+        }
+
+        .agent-info p {
+            margin: 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-left: auto;
+        }
+
+        .status-active { background: #38a169; }
+        .status-processing { background: #d69e2e; animation: pulse 2s infinite; }
+        .status-idle { background: #cbd5e0; }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .rule-display {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            position: relative;
+        }
+
+        .rule-toggle {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .rule-natural {
+            font-family: 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+        }
+
+        .rule-technical {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #4a5568;
+            background: #edf2f7;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .conversation-log {
+            max-height: 400px;
+            overflow-y: auto;
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .message.patient-agent {
+            background: linear-gradient(135deg, #e6f3ff, #b3d9ff);
+            border-left: 4px solid #3182ce;
+        }
+
+        .message.imaging-agent {
+            background: linear-gradient(135deg, #f0fff4, #c6f6d5);
+            border-left: 4px solid #38a169;
+        }
+
+        .message.radiomics-agent {
+            background: linear-gradient(135deg, #fffaf0, #fbd38d);
+            border-left: 4px solid #d69e2e;
+        }
+
+        .message-header {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .message-time {
+            font-size: 0.8rem;
+            color: #666;
+            margin-left: auto;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 10px 25px;
+            border: none;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .wide-panel {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 1200px) {
+            .main-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+            .wide-panel {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>ACR - Enhanced AI Cancer Research</h1>
+            <p>Agent-Based Federated Learning Platform with Live Ontology Integration</p>
+            <p>Real-time Agent Communication and Human-Readable Rule Processing</p>
+        </div>
+
+        <div class="main-grid">
+            <!-- Agent Status Panel -->
+            <div class="panel">
+                <h2>🤖 Active AI Agents</h2>
+                
+                <div class="agent-status">
+                    <div class="agent-avatar">PA</div>
+                    <div class="agent-info">
+                        <h4>Patient Agent</h4>
+                        <p>Managing patient demographics and history</p>
+                    </div>
+                    <div class="status-indicator status-active"></div>
+                </div>
+
+                <div class="agent-status">
+                    <div class="agent-avatar">IA</div>
+                    <div class="agent-info">
+                        <h4>Imaging Agent</h4>
+                        <p>Processing radiological studies</p>
+                    </div>
+                    <div class="status-indicator status-processing"></div>
+                </div>
+
+                <div class="agent-status">
+                    <div class="agent-avatar">RA</div>
+                    <div class="agent-info">
+                        <h4>Radiomics Agent</h4>
+                        <p>Analyzing texture and shape features</p>
+                    </div>
+                    <div class="status-indicator status-active"></div>
+                </div>
+
+                <div class="agent-status">
+                    <div class="agent-avatar">DA</div>
+                    <div class="agent-info">
+                        <h4>Diagnostic Agent</h4>
+                        <p>Coordinating diagnostic workflow</p>
+                    </div>
+                    <div class="status-indicator status-idle"></div>
+                </div>
+            </div>
+
+            <!-- Patient Data Input -->
+            <div class="panel">
+                <h2>📝 Patient Data Input</h2>
+                <form id="patientForm">
+                    <div class="form-group">
+                        <label for="patientId">Patient ID</label>
+                        <input type="text" id="patientId" placeholder="ACR-2024-001" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="imagingType">Imaging Type</label>
+                        <select id="imagingType" required>
+                            <option value="">Select Type</option>
+                            <option value="MRI">MRI</option>
+                            <option value="CT">CT Scan</option>
+                            <option value="Mammography">Mammography</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cancerType">Cancer Type</label>
+                        <select id="cancerType" required>
+                            <option value="">Select Type</option>
+                            <option value="Breast">Breast Cancer</option>
+                            <option value="Cervical">Cervical Cancer</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="radiomicsFeatures">Radiomics Features</label>
+                        <textarea id="radiomicsFeatures" rows="3" placeholder='{"texture": 0.75, "shape": 0.82}'></textarea>
+                    </div>
+
+                    <button type="submit" class="btn">🚀 Start Agent Analysis</button>
+                </form>
+            </div>
+
+            <!-- Agent Communication Log -->
+            <div class="panel">
+                <h2>💬 Agent Conversations</h2>
+                <div class="conversation-log" id="conversationLog">
+                    <div class="message patient-agent">
+                        <div class="message-header">
+                            Patient Agent
+                            <span class="message-time">14:32:15</span>
+                        </div>
+                        <p>New case received: 45-year-old female, mammography study. Initiating diagnostic workflow...</p>
+                    </div>
+                    
+                    <div class="message imaging-agent">
+                        <div class="message-header">
+                            Imaging Agent
+                            <span class="message-time">14:32:18</span>
+                        </div>
+                        <p>Mammography analysis complete. Detected suspicious mass in upper left quadrant. Requesting radiomics analysis...</p>
+                    </div>
+                    
+                    <div class="message radiomics-agent">
+                        <div class="message-header">
+                            Radiomics Agent
+                            <span class="message-time">14:32:22</span>
+                        </div>
+                        <p>Texture analysis shows high heterogeneity (0.84). Shape irregularity detected (0.79). Triggering high-risk assessment protocol...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Live Rules and Ontology Panel -->
+        <div class="panel wide-panel">
+            <div>
+                <h2>🧠 Live SWRL Rules (Human-Readable)</h2>
+                
+                <div class="rule-display">
+                    <button class="rule-toggle" onclick="toggleRule(this)">Show Technical</button>
+                    <div class="rule-natural">
+                        <strong>High-Risk Detection Rule:</strong><br>
+                        If a patient has imaging studies where both texture analysis shows values above 0.8 AND shape irregularity exceeds 0.75, then automatically classify this case as HIGH RISK and trigger urgent review protocols.
+                    </div>
+                    <div class="rule-technical">
+                        Patient(?p) ∧ hasImagingStudy(?p, ?study) ∧ hasRadiomicsFeature(?study, ?feature) ∧ hasTextureValue(?feature, ?texture) ∧ hasShapeValue(?feature, ?shape) ∧ swrlb:greaterThan(?texture, 0.8) ∧ swrlb:greaterThan(?shape, 0.75) → hasRiskLevel(?feature, HighRisk)
+                    </div>
+                </div>
+
+                <div class="rule-display">
+                    <button class="rule-toggle" onclick="toggleRule(this)">Show Technical</button>
+                    <div class="rule-natural">
+                        <strong>Age-Based Priority Rule:</strong><br>
+                        When a patient over 40 years old receives a HIGH RISK classification from imaging analysis, immediately flag their case for urgent medical review and notify the clinical team within 24 hours.
+                    </div>
+                    <div class="rule-technical">
+                        Patient(?p) ∧ hasAge(?p, ?age) ∧ hasImagingStudy(?p, ?study) ∧ hasRadiomicsFeature(?study, ?feature) ∧ hasRiskLevel(?feature, HighRisk) ∧ swrlb:greaterThan(?age, 40) → requiresUrgentReview(?p, true)
+                    </div>
+                </div>
+
+                <div class="rule-display">
+                    <button class="rule-toggle" onclick="toggleRule(this)">Show Technical</button>
+                    <div class="rule-natural">
+                        <strong>Federated Learning Eligibility:</strong><br>
+                        Include patient data in federated learning only if: data quality score exceeds 90%, patient has provided explicit consent for research participation, and the imaging study meets technical quality standards.
+                    </div>
+                    <div class="rule-technical">
+                        Patient(?p) ∧ hasImagingStudy(?p, ?study) ∧ hasDataQuality(?study, ?quality) ∧ hasPrivacyConsent(?p, true) ∧ swrlb:greaterThan(?quality, 0.9) → eligibleForFederatedLearning(?p, true)
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h2>🔄 Live Ontology Updates</h2>
+                <div style="background: #f8fafc; border-radius: 10px; padding: 15px; height: 400px; overflow-y: auto;">
+                    <div style="margin-bottom: 15px; padding: 10px; background: white; border-radius: 8px; border-left: 4px solid #38a169;">
+                        <strong>14:32:25</strong> - New individual created: Patient_ACR_2024_007
+                    </div>
+                    <div style="margin-bottom: 15px; padding: 10px; background: white; border-radius: 8px; border-left: 4px solid #3182ce;">
+                        <strong>14:32:26</strong> - Property assertion: hasRiskLevel(Patient_ACR_2024_007, HighRisk)
+                    </div>
+                    <div style="margin-bottom: 15px; padding: 10px; background: white; border-radius: 8px; border-left: 4px solid #d69e2e;">
+                        <strong>14:32:27</strong> - Rule fired: HighRiskDetectionRule for Patient_ACR_2024_007
+                    </div>
+                    <div style="margin-bottom: 15px; padding: 10px; background: white; border-radius: 8px; border-left: 4px solid #764ba2;">
+                        <strong>14:32:28</strong> - Agent notification sent: DiagnosticAgent → ClinicalReviewAgent
+                    </div>
+                    <div style="margin-bottom: 15px; padding: 10px; background: white; border-radius: 8px; border-left: 4px solid #38a169;">
+                        <strong>14:32:30</strong> - Ontology consistency verified: No conflicts detected
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced agent communication system
+        let agents = {
+            patient: { name: 'Patient Agent', status: 'active' },
+            imaging: { name: 'Imaging Agent', status: 'processing' },
+            radiomics: { name: 'Radiomics Agent', status: 'active' },
+            diagnostic: { name: 'Diagnostic Agent', status: 'idle' }
+        };
+
+        let conversationLog = [];
+        let ontologyUpdates = [];
+
+        // Initialize the enhanced interface
+        document.addEventListener('DOMContentLoaded', function() {
+            updateAgentStatuses();
+            startAgentCommunication();
+        });
+
+        function toggleRule(button) {
+            const ruleDisplay = button.parentElement;
+            const technical = ruleDisplay.querySelector('.rule-technical');
+            
+            if (technical.style.display === 'none' || !technical.style.display) {
+                technical.style.display = 'block';
+                button.textContent = 'Hide Technical';
+            } else {
+                technical.style.display = 'none';
+                button.textContent = 'Show Technical';
+            }
+        }
+
+        function updateAgentStatuses() {
+            // Simulate dynamic agent status updates
+            setInterval(() => {
+                const statuses = ['active', 'processing', 'idle'];
+                const agentElements = document.querySelectorAll('.status-indicator');
+                
+                agentElements.forEach((element, index) => {
+                    if (Math.random() > 0.8) { // 20% chance to change status
+                        const currentClass = Array.from(element.classList).find(cls => cls.startsWith('status-'));
+                        element.classList.remove(currentClass);
+                        
+                        const newStatus = statuses[Math.floor(Math.random() * statuses.length)];
+                        element.classList.add(`status-${newStatus}`);
+                    }
+                });
+            }, 3000);
+        }
+
+        function startAgentCommunication() {
+            // Simulate ongoing agent conversations
+            const messageTemplates = [
+                { agent: 'patient-agent', message: 'Received new case for analysis...', sender: 'Patient Agent' },
+                { agent: 'imaging-agent', message: 'Processing imaging data and extracting features...', sender: 'Imaging Agent' },
+                { agent: 'radiomics-agent', message: 'Completed radiomics analysis with confidence level 0.87...', sender: 'Radiomics Agent' }
+            ];
+
+            setInterval(() => {
+                if (Math.random() > 0.7) { // 30% chance to add new message
+                    const template = messageTemplates[Math.floor(Math.random() * messageTemplates.length)];
+                    addAgentMessage(template.agent, template.sender, template.message);
+                }
+            }, 5000);
+        }
+
+        function addAgentMessage(agentClass, sender, message) {
+            const log = document.getElementById('conversationLog');
+            const now = new Date();
+            const timeString = now.toTimeString().slice(0, 8);
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${agentClass}`;
+            messageDiv.innerHTML = `
+                <div class="message-header">
+                    ${sender}
+                    <span class="message-time">${timeString}</span>
+                </div>
+                <p>${message}</p>
+            `;
+            
+            log.appendChild(messageDiv);
+            log.scrollTop = log.scrollHeight;
+            
+            // Remove old messages to prevent overflow
+            while (log.children.length > 10) {
+                log.removeChild(log.firstChild);
+            }
+        }
+
+        // Enhanced form submission with agent workflow
+        document.getElementById('patientForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Update agent statuses to show processing
+            document.querySelectorAll('.status-indicator').forEach(indicator => {
+                indicator.className = 'status-indicator status-processing';
+            });
+            
+            // Simulate agent workflow
+            setTimeout(() => {
+                addAgentMessage('patient-agent', 'Patient Agent', 'Initiating analysis for new patient case...');
+            }, 500);
+            
+            setTimeout(() => {
+                addAgentMessage('imaging-agent', 'Imaging Agent', 'Analyzing imaging data and applying detection algorithms...');
+            }, 1500);
+            
+            setTimeout(() => {
+                addAgentMessage('radiomics-agent', 'Radiomics Agent', 'High-risk features detected. Confidence: 89%. Recommending urgent review.');
+            }, 3000);
+            
+            setTimeout(() => {
+                // Reset statuses
+                document.querySelectorAll('.status-indicator')[0].className = 'status-indicator status-active';
+                document.querySelectorAll('.status-indicator')[1].className = 'status-indicator status-active';
+                document.querySelectorAll('.status-indicator')[2].className = 'status-indicator status-active';
+                document.querySelectorAll('.status-indicator')[3].className = 'status-indicator status-active';
+            }, 4000);
+        });
+    </script>
+</body>
+</html>

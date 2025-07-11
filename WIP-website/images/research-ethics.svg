@@ -1,5 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <circle cx="50" cy="50" r="45" fill="#FFF8E1" stroke="#FF8F00"/>
-  <path d="M35,40 L45,55 L65,35" stroke="#FF8F00" stroke-width="5" fill="none"/>
-  <text x="50" y="75" font-family="Arial" font-size="10" text-anchor="middle" fill="#FF8F00">Approved</text>
-</svg>
